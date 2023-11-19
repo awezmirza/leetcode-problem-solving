@@ -10,10 +10,7 @@ public:
             if(nums[i] > nums[i-1]) counter++;
             occurrence.push_back(counter);
         }
-        int ans = 0;
-        for(int i = 0;i<n;i++){
-            ans +=  occurrence[i];
-        }
+        int ans = accumulate(occurrence.begin(),occurrence.end(),0);
         return ans;
     }
 };
