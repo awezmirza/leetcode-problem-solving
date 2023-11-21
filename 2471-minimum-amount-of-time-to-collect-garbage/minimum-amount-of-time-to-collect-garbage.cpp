@@ -4,7 +4,6 @@ public:
         int n = garbage.size();
         int lastOccG =0, lastOccP =0, lastOccM =0, ans = 0;
         for(int i = 0;i<n;i++){
-            int j = 0;
             for(char c : garbage[i]){
                 if(c == 'G'){
                     ans += 1 + lastOccG;
