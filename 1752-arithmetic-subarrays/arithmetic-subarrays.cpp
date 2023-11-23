@@ -16,11 +16,11 @@ public:
         int n = nums.size();
         int m = r.size();
         vector<bool> ans;
+        // O(m)
         for(int i = 0;i<m;i++){
-            vector<int> currNums;
-            for(int j = l[i];j<=r[i];j++){
-                currNums.push_back(nums[j]);
-            }
+            // O(n)
+            vector<int> currNums(nums.begin() + l[i], nums.begin() + r[i] + 1);
+            // O(n log n)
             ans.push_back(isArithmetic(currNums));
         }
         return ans;
