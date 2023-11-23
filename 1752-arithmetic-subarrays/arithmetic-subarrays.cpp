@@ -3,7 +3,6 @@ public:
 
     bool isArithmetic(vector<int>& currNums){
         int n = currNums.size();
-        if(n<=2) return true;
         sort(currNums.begin(),currNums.end());
         int diff = currNums[1] - currNums[0];
         for(int i = 2; i<n;i++){
