@@ -1,15 +1,32 @@
 class Solution {
 public:
     int maxCoins(vector<int>& piles) {
-        sort(piles.begin(),piles.end());
+        int maxElem = piles[0];
+        for(int elem : piles) maxElem = max(elem,maxElem);
+
+        vector <int> freq(maxElem + 1);
+
+        for(int elem : piles) freq[elem]++;
+
+        int end = maxElem;
+
         int n = piles.size();
         int totalIts = n/3;
-        int it = n-2;
         int ans = 0;
+
+        bool turn = 0;
+
         while(totalIts){
-            ans += piles[it];
-            it -= 2;
-            totalIts--;
+            if(freq[end]==0){
+            end--;
+            continue;
+            }
+            if(turn){
+                ans += end;
+                totalIts--;
+            } 
+            freq[end]--;
+            turn = !turn;
         }
         return ans;
     }
