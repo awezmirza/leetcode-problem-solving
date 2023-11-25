@@ -9,8 +9,8 @@ public:
         }
         vector <int> ansArray;
         for(int i = 0;i<n;i++){
-            ansArray.push_back( (i*nums[i] - lSum) + rSum - (n-1-i)*nums[i] - nums[i]);
             rSum -= nums[i];
+            ansArray.push_back( (i*nums[i] - lSum) + rSum - (n-1-i)*nums[i]);
             lSum += nums[i];
         }
         return ansArray;
