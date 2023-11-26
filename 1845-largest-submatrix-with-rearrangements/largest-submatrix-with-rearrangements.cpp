@@ -4,40 +4,33 @@ public:
         int n = matrix.size();
         int m = matrix[0].size();
         int ans = 0;
-        vector<int>prevVal= matrix[0];
+
+        vector<pair<int,int>> previousHeights;
+
         for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                if(matrix[i][j] == 1){
-                    if(i!=0){
-                        prevVal[j]++;
-                    }
+            vector<pair<int,int>> currHeights;
+            vector<bool> visited(m);
+            for(auto [j,h] : previousHeights){
+                if(matrix[i][j]){
+                    currHeights.push_back({j,h+1});
                 }
-                else prevVal[j]=0;
+                visited[j]=true;
             }
-            vector<int> currRow = prevVal;
-            sort(currRow.begin(),currRow.end(),greater());
+
+
             for(int j=0;j<m;j++){
-                ans = max(ans,currRow[j] * (j+1));
-            } 
+                if(!visited[j] && matrix[i][j]){
+                    currHeights.push_back({j,1});
+                }
+            }
+            for(int j=0;j<currHeights.size();j++){
+                ans = max(ans,(j+1)*currHeights[j].second);
+            }
+            previousHeights = currHeights;
         }
+
+
         return ans;
     }
 };
 
-// class Solution {
-// public:
-//     int largestSubmatrix(vector<vector<int>>& matrix) {
-//         vector<vector<int>> copy = matrix;
-//         int m = matrix.size();
-//         int n = matrix[0].size();
-//         int ans = 0;
-        
-//         for(int row=0;row<m;row++){
-//             for(int col=0;col<n;col++) if(matrix[row][col] !=0 && row > 0) matrix[row][col] += matrix[row -1][col];
-//             vector<int> currRow = matrix[row];
-//             sort(currRow.begin(),currRow.end(),greater());
-//             for(int j=0;j<n;j++) ans = max(ans,currRow[j] * (j+1));
-//         }
-//         return ans;
-//     }
-// };
