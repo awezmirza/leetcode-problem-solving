@@ -1,34 +1,35 @@
 class Solution {
 public:
     int largestSubmatrix(vector<vector<int>>& matrix) {
-        int n = matrix.size();
-        int m = matrix[0].size();
-        int ans = 0;
+       int n = matrix.size();
+       int m = matrix[0].size();
+       int ans = 0;
 
-        vector<pair<int,int>> previousHeights;
+       vector<pair<int,int>> prvHts;
 
-        for(int i=0;i<n;i++){
-            vector<pair<int,int>> currHeights;
-            vector<bool> visited(m);
-            for(auto [j,h] : previousHeights){
-                if(matrix[i][j]){
-                    currHeights.push_back({j,h+1});
-                }
-                visited[j]=true;
+       for(int i = 0;i<n;i++){
+           int prvSze = prvHts.size();
+            vector<bool> visited(m,0);
+           
+           vector<pair<int,int>> currHts;
+
+           for(auto [j,h]:prvHts){
+               if(matrix[i][j] == 1){
+                   currHts.push_back({j,h+1});
+               }
+               visited[j] = 1;
             }
-
-
             for(int j=0;j<m;j++){
-                if(!visited[j] && matrix[i][j]){
-                    currHeights.push_back({j,1});
+                if(matrix[i][j] == 1 && visited[j]==false){
+                    currHts.push_back({j,1});
                 }
             }
-            for(int j=0;j<currHeights.size();j++){
-                ans = max(ans,(j+1)*currHeights[j].second);
+            int currSze = currHts.size();
+            for(int j = 0;j<currSze;j++){
+                ans = max(ans,(j+1)*(currHts[j].second));
             }
-            previousHeights = currHeights;
-        }
-
+            prvHts = currHts;
+       }
 
         return ans;
     }
