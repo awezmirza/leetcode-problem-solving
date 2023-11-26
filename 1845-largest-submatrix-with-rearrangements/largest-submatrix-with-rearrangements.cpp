@@ -1,18 +1,20 @@
 class Solution {
 public:
     int largestSubmatrix(vector<vector<int>>& matrix) {
-        // vector<vector<int>> cumulative = matrix;
         int n = matrix.size();
         int m = matrix[0].size();
         int ans = 0;
-
+        vector<int>prevVal= matrix[0];
         for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){ 
-                if(matrix[i][j] == 1 && i != 0){
-                    matrix[i][j] = matrix[i][j] + matrix[i-1][j];
+            for(int j=0;j<m;j++){
+                if(matrix[i][j] == 1){
+                    if(i!=0){
+                        prevVal[j]++;
+                    }
                 }
+                else prevVal[j]=0;
             }
-            vector<int> currRow = matrix[i];
+            vector<int> currRow = prevVal;
             sort(currRow.begin(),currRow.end(),greater());
             for(int j=0;j<m;j++){
                 ans = max(ans,currRow[j] * (j+1));
