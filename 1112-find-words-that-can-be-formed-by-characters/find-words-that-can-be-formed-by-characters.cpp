@@ -1,13 +1,11 @@
 class Solution {
 public:
-
     bool isPossible(vector<int>& freq, string str){
         vector<int> copyFreq = freq;
 
         for(auto el : str){
-            int currEl = el - 'a';
-            if(copyFreq[currEl] == 0) return 0;
-            copyFreq[currEl]--;
+            if(copyFreq[el - 'a'] == 0) return 0;
+            copyFreq[el - 'a']--;
         }
         return true;
     }
