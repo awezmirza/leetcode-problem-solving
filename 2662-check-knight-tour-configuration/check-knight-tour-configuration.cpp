@@ -14,7 +14,11 @@ public:
         }
 
         for(int i = 1;i<n*n;i++){
-            if(!(abs(mp[i][0] - mp[i-1][0]) == 2 && abs(mp[i][1] - mp[i-1][1]) == 1  || abs( mp[i][0] - mp[i-1][0] ) == 1 && abs(mp[i][1] - mp[i-1][1]) == 2 )) return false;
+
+            int row = abs(mp[i][0] - mp[i-1][0]);
+            int col = abs(mp[i][1] - mp[i-1][1]);
+
+            if(!(row == 2 && col == 1  || row == 1 && col == 2 )) return false;
         }
         return true;
     }
