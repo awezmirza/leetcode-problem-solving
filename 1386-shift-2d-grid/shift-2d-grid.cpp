@@ -3,8 +3,8 @@ public:
     vector<vector<int>> shiftGrid(vector<vector<int>>& grid, int k) {
         int n = grid.size();
         int m = grid[0].size();
-        int totalElems = m*n;
-        k = k % totalElems;
+
+        k = k % (m*n);
         int x = k/m;
         int y = k%m;
 
@@ -14,16 +14,10 @@ public:
                 ans[x][y] = grid[i][j];
                 if(y == m-1){
                     y=0;
-                    if(x == n-1){
-                    x = 0;
-                    }
-                    else{
-                    x++;    
-                    }   
+                    if(x == n-1) x = 0;
+                    else x++;   
                 }
-                else{
-                y++;
-                }
+                else y++;
             }
         }
         return ans;
