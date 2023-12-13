@@ -1,4 +1,10 @@
 class Solution {
+
+// variable 
+// input
+// Extras fnctn call
+
+
 public:
     bool isAnswer(int i,int j, vector<vector<int>>& mat){
         int n = mat.size();
@@ -26,6 +32,7 @@ public:
                     if(isAnswer(i,j,mat)){
                         ans++;
                     }
+                    break;
                 }
             }
         }
