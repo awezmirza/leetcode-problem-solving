@@ -26,10 +26,16 @@ public:
         int n = mat.size();
         int m = mat[0].size();
         int ans = 0;
+        // vector<int> rows;
+        unordered_set <int> rows;
         for(int i = 0;i<n;i++){
+            if(rows.find(i) != rows.end()){
+                continue;
+            }
             for(int j=0;j<m;j++){
                 if(mat[i][j] == 1){
                     if(isAnswer(i,j,mat)){
+                        rows.insert(i);
                         ans++;
                     }
                     break;
