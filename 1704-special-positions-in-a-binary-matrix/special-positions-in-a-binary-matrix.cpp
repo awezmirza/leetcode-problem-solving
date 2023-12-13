@@ -1,6 +1,5 @@
 class Solution {
 public:
-
     bool isAnswer(int i,int j, vector<vector<int>>& mat){
         int n = mat.size();
         int m = mat[0].size();
@@ -10,15 +9,15 @@ public:
                         }
                     }
         for(int l = 0;l<n;l++){
-                        if(mat[l][j] == 1 && l != i){
-                            return false;
-                        }
-                    }
-                    return true;
+            if(mat[l][j] == 1 && l != i){
+                return false;
+            }
+        }
+        return true;
     }
 
     int numSpecial(vector<vector<int>>& mat) {
-        vector<vector<int>> ones;
+        // vector<vector<int>> ones;
         int n = mat.size();
         int m = mat[0].size();
         int ans = 0;
