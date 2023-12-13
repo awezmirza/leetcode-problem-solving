@@ -17,7 +17,6 @@ public:
     }
 
     int numSpecial(vector<vector<int>>& mat) {
-        // vector<vector<int>> ones;
         int n = mat.size();
         int m = mat[0].size();
         int ans = 0;
