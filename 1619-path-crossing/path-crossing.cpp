@@ -2,7 +2,7 @@ class Solution {
 public:
     bool isPathCrossing(string path) {
         int x = 0,y=0;
-         set<string> s;
+        unordered_set<string> s;
         s.insert("0,0");
 
         for(auto pat : path ){
