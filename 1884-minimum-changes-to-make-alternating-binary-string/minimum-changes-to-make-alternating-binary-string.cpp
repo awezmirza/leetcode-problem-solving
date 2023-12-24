@@ -8,7 +8,7 @@ public:
         // 2 -> 0
         // 3 -> 1
         for(int i=0;i<n;i++){
-            if( i%2 == 0){ //even
+            if(i&1){ //even
                 if(s[i] == '1') cnt++;
             }
             else{
