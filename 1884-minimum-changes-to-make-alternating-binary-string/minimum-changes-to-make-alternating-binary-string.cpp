@@ -11,9 +11,7 @@ public:
             if(i&1){ //even
                 if(s[i] == '1') cnt++;
             }
-            else{
-                if(s[i] == '0') cnt++;
-            }
+            else if(s[i] == '0') cnt++;
         }
         return min(cnt , n - cnt );
     }
