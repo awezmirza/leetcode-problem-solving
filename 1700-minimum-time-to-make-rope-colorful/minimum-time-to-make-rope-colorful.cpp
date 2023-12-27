@@ -19,12 +19,11 @@ public:
                 }
                 else{
                     ans += accSum - maxi;
-                    maxi = 0;
-                    accSum = 0;
+                    // maxi = 0;
+                    // accSum = 0;
                     break;
                 }
             }
-
         }
 
         ans += accSum - maxi;
