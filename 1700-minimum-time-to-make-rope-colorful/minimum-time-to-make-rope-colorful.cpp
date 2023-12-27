@@ -5,13 +5,14 @@ public:
         int n = neededTime.size();
         int ans = 0, maxi, accSum ;
 
-        for(int i =0;i<n;i){
+        int i = 0;
+        while(i<n){
             maxi = neededTime[i];
             accSum = neededTime[i];
             int lastIdx = i;
             i++;
             while(i<n){
-                if(cout<<colors[lastIdx]<<","<<colors[i]<<endl,colors[i] == colors[lastIdx]) {
+                if(colors[i] == colors[lastIdx]) {
                     maxi = max(neededTime[i], maxi);
                     accSum += neededTime[i];
                     i++;
@@ -20,10 +21,10 @@ public:
                     ans += accSum - maxi;
                     maxi = 0;
                     accSum = 0;
-                    // i++;
                     break;
                 }
             }
+
         }
 
         ans += accSum - maxi;
