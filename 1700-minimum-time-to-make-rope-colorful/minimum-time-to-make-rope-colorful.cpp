@@ -2,13 +2,9 @@ class Solution {
 public:
     int minCost(string colors, vector<int>& neededTime) {
         
-        int n = neededTime.size();
-        int ans = 0, maxi, accSum ;
-
-        int i = 0;
+        int n = neededTime.size(), ans = 0, maxi, accSum, i = 0;
         while(i<n){
-            maxi = neededTime[i];
-            accSum = neededTime[i];
+            maxi = accSum = neededTime[i];
             int lastIdx = i;
             i++;
             while(i<n){
@@ -19,8 +15,6 @@ public:
                 }
                 else{
                     ans += accSum - maxi;
-                    // maxi = 0;
-                    // accSum = 0;
                     break;
                 }
             }
