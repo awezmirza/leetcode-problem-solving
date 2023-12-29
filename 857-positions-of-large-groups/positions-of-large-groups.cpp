@@ -5,7 +5,8 @@ public:
         vector<vector<int>> ans;
         for(int i = 0;i<n;i){
             int last = i++;
-            while(s[i] == s[last] && i++<n){ 
+            while(s[i] == s[last] && i<n){ 
+                ++i;
             }
             if(i - last >= 3) ans.push_back({last, i-1});
         }
