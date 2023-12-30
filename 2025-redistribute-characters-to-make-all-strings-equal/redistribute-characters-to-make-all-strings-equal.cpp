@@ -9,7 +9,7 @@ public:
             }
         }
         for(auto el : freq){
-            if(!(el == 0 || ( el%n == 0 )))
+            if(!( el%n == 0 ))
             return false;
         }
         return true;
