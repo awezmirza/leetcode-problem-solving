@@ -1,16 +1,16 @@
 class Solution {
 public:
     int findContentChildren(vector<int>& g, vector<int>& s) {
-        sort(s.begin(), s.end());
-        sort(g.begin(), g.end());
-        int gSz = g.size();
-        int sSz = s.size();
+
+        sort(s.begin(), s.end()), sort(g.begin(), g.end());
+        int gSz = g.size(), sSz = s.size();
+        int sPtr = 0, gPtr = 0;
+
         int count = 0;
-        for(int i = 0,gPtr = 0;i<sSz && gPtr < gSz;i++){
-            if(s[i] >= g[gPtr]){
-                count++;
-                gPtr++;
-            }
+
+        while (sPtr < sSz && gPtr < gSz) {
+            if (s[sPtr] >= g[gPtr]) count++, gPtr++;
+            sPtr++;
         }
         return count;
     }
