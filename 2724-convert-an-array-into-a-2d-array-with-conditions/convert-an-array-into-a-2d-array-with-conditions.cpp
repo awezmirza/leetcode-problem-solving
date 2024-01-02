@@ -1,8 +1,8 @@
 class Solution {
 public:
     vector<vector<int>> findMatrix(vector<int>& nums) {
-        vector<int> freq(201,0);
-        // unordered_map<int,int> freq;
+        // vector<int> freq(201,0);
+        unordered_map<int,int> freq;
         // int maxi = 0;
         vector<vector<int>> ans;
         int ansSize = 0;
