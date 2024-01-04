@@ -16,7 +16,6 @@ public:
             if(cnt == 1){
                 return -1;
             }
-            cout<<"cnt: "<<cnt<<endl;
             if(cnt % 3 != 1 ){
                 ans += cnt/3;
                 cnt = cnt % 3;
@@ -29,7 +28,6 @@ public:
             }
             ans += cnt/2;
             cnt = cnt % 2;
-            cout<<"cnt after 2: "<<cnt<<endl;
             if(cnt>0){
                 return -1;
             }
