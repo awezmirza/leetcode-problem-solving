@@ -30,7 +30,7 @@ public:
             i++;
         }
 
-        ans = max(ans, cnt);
+        // ans = max(ans, cnt);
 
         return ans == 1 ? -1 : ans;
     }
