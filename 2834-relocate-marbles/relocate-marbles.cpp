@@ -1,20 +1,17 @@
 class Solution {
 public:
     vector<int> relocateMarbles(vector<int>& nums, vector<int>& moveFrom, vector<int>& moveTo) {
-        unordered_map<int,bool> mp;
-        for(int num : nums){
-            mp[num] = true;
-        }
+
+        set<int> st(nums.begin(),nums.end());
         int n = moveTo.size();
         for(int i = 0;i<n;i++){
-            mp[moveFrom[i]] = false;
-            mp[moveTo[i]] = true;
+            st.erase(moveFrom[i]);
+            st.insert(moveTo[i]);
         }
         vector<int> ans;
-        for(auto pr : mp){
-            if(pr.second) ans.push_back(pr.first);
+        for(auto pr : st){
+            ans.push_back(pr);
         }
-        sort(ans.begin(),ans.end());
         return ans;
     }
 };
