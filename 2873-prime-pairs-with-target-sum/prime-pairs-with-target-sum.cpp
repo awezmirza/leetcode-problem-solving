@@ -12,7 +12,7 @@ public:
             }
         }
         vector<vector<int>> ans;
-        for (int i = 2; i < (n / 2) + 1; i++) {
+        for (int i = 2; i <= n/2; i++) {
             if (sieve[i] && sieve[n - i]) {
                 ans.push_back({i, n - i});
             }
