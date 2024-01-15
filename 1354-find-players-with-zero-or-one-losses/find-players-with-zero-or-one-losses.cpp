@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<vector<int>> findWinners(vector<vector<int>>& matches) {
-        set<int> noLoss, oneLoss, moreLoss;
+        unordered_set<int> noLoss, oneLoss, moreLoss;
         for (auto match : matches) {
             if (moreLoss.find(match[0]) == moreLoss.end() &&
                 oneLoss.find(match[0]) == oneLoss.end() &&
@@ -28,8 +28,8 @@ public:
             oneLossAns.push_back(el);
         }
 
-        // sort(noLossAns.begin(), noLossAns.end());
-        // sort(oneLossAns.begin(), oneLossAns.end());
+        sort(noLossAns.begin(), noLossAns.end());
+        sort(oneLossAns.begin(), oneLossAns.end());
 
         return {noLossAns, oneLossAns};
     }
