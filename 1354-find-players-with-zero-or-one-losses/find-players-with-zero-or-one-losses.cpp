@@ -28,8 +28,8 @@ public:
             oneLossAns.push_back(el);
         }
 
-        sort(noLossAns.begin(), noLossAns.end());
-        sort(oneLossAns.begin(), oneLossAns.end());
+        // sort(noLossAns.begin(), noLossAns.end());
+        // sort(oneLossAns.begin(), oneLossAns.end());
 
         return {noLossAns, oneLossAns};
     }
