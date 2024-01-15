@@ -19,8 +19,7 @@ public:
             }
         }
 
-        vector<int> noLossAns;
-        vector<int> oneLossAns;
+        vector<int> noLossAns, oneLossAns;
 
         for (auto el : noLoss) {
             noLossAns.push_back(el);
