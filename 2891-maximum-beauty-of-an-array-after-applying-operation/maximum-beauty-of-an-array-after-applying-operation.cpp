@@ -4,12 +4,8 @@ public:
         vector<int> mp(200002);
         int greatestElem = 0;
         for(int num:nums){
-            if (num - k <= 0) {
-                mp[0]++;
-            }
-            else{
-                mp[num - k]++;
-            }
+            if (num - k <= 0) mp[0]++;
+            else mp[num - k]++;
             mp[num + k + 1]--;
             greatestElem = max(greatestElem,num + k + 1);
         }
