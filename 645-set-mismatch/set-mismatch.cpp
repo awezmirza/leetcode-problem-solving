@@ -1,16 +1,21 @@
 class Solution {
 public:
     vector<int> findErrorNums(vector<int>& nums) {
-        sort(nums.begin(), nums.end());
-        int prev = 0;
-        vector<int> ans;
-        int num = 1;
-        for (int el:nums) {
-            if(el == num) num++; 
-            if (el == prev) ans.push_back(prev); 
-            prev = el;
+        int n = nums.size();
+        int dupl = 0;
+        for(int el:nums){
+            if(nums[abs(el) - 1] < 0){
+                dupl = abs(el);
+            }
+            else{
+                nums[abs(el)-1] *= -1; 
+            }
         }
-        ans.push_back(num);
-        return ans;
+        for(int i=0;i<n;i++){
+            if(nums[i] >0 ){
+                return {dupl,i+1};
+            }
+        }
+        return {0,0};
     }
 };
