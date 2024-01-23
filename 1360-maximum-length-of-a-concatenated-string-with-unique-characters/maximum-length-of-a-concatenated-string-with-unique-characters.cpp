@@ -19,27 +19,22 @@ public:
         }
     }
 
-    void solve(vector<string>& arr, int& ans,vector<bool>& freq,int curr,int length){
+    int solve(vector<string>& arr,vector<bool>& freq,int curr,int length){
         if(curr >= arr.size()){
-            ans = max(ans,length);
-            return;
+            return length;
         }
-
+        int taking;
         if(canTake(arr[curr],freq)){
-            cout<<"Taking: "<<arr[curr]<<endl;
-            cout<<"len: "<<length+arr[curr].size()<<endl;
-            solve(arr,ans,freq,curr+1,length+arr[curr].size());
-            cout<<"Removing: "<<arr[curr]<<endl;
+            taking = solve(arr,freq,curr+1,length+arr[curr].size());
             remove(arr[curr],freq);
         }
-        cout<<"W/0 taking"<<endl;
-        solve(arr,ans,freq,curr+1,length);
+        int woTaking=solve(arr,freq,curr+1,length);
+        return max(taking,woTaking);
     }
 
     int maxLength(vector<string>& arr) {
         vector<bool> freq(26,0);
-        int ans = 0;
-        solve(arr,ans,freq,0,0);
+        int ans = solve(arr,freq,0,0);
         return ans;
     }
 };
