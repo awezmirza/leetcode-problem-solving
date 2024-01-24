@@ -26,6 +26,18 @@ public:
         return fst + scnd;
     }
 
+    string minimum(string a,string b){
+        if(a.size() == b.size()){
+            return min(a,b);
+        }
+        else if(a.size() < b.size()){
+            return a;
+        }
+        else{
+            return b;
+        }
+    }
+
     string minimumString(string a, string b, string c) {
         // a -> b -> c
         // a -> c -> b
@@ -33,64 +45,65 @@ public:
         // b -> c -> a
         // c -> a -> b
         // c -> b -> a
-        string atob = fit(a, b);
-        string btoc = fit(b, c);
-        string atoc = fit(a, c);
-        string ctob = fit(c, b);
-        string ctoa = fit(c, a);
-        string btoa = fit(b, a);
 
-        string fst = fit(atob, c);
+        string fst = fit(fit(a, b), c);
+        string scnd = fit(fit(a, c), b);
+        string thrd = fit(fit(b, a), c);
+        string frth = fit(fit(b, c), a);
+        string ffth = fit(fit(c, a), b);
+        string sxth = fit(fit(c, b), a);
 
-        string scnd = fit(atoc, b);
-        string thrd = fit(btoa, c);
-        string frth = fit(btoc, a);
-        string ffth = fit(ctoa, b);
-        string sxth = fit(ctob, a);
-        int one = fst.length();
+        string mini = minimum(fst,minimum(scnd,minimum(thrd,minimum(frth,minimum(ffth,sxth)))));
+        // string mini = minimum(fst,scnd);
+        // string mini = minimum(fst,scnd);
+        // string mini = minimum(fst,scnd);
+        // string mini = minimum(fst,scnd);
 
-        int two = scnd.length();
-        int three = thrd.length();
-        int four = frth.length();
-        int five = ffth.length();
-        int six = sxth.length();
+        return mini;
 
-        string ans = "";
+        // int one = fst.length();
+        // int two = scnd.length();
+        // int three = thrd.length();
+        // int four = frth.length();
+        // int five = ffth.length();
+        // int six = sxth.length();
 
-        int mini = min(one, min(two, min(three, min(four, min(five, six)))));
-        if (mini == one) {
-            ans = fst;
-        }
-        if (mini == two) {
-            if (ans == "")
-                ans = scnd;
-            else
-                ans = min(ans, scnd);
-        }
-        if (mini == three) {
-            if (ans == "")
-                ans = thrd;
-            else
-                ans = min(ans, thrd);
-        }
-        if (mini == four) {
-            if (ans == "")
-                ans = frth;
-            else
-                ans = min(ans, frth);
-        }
-        if (mini == five) {
-            if (ans == "")
-                ans = ffth;
-            else
-                ans = min(ans, ffth);
-        }
-        if (mini == six) {
-            if (ans == "")
-                ans = sxth;
-            else
-                ans = min(ans, sxth);
-        }
-        return ans;
+        // string ans = "";
+
+        // int mini = min(one, min(two, min(three, min(four, min(five, six)))));
+        // if (mini == one) {
+        //     ans = fst;
+        // }
+        // if (mini == two) {
+        //     if (ans == "")
+        //         ans = scnd;
+        //     else
+        //         ans = min(ans, scnd);
+        // }
+        // if (mini == three) {
+        //     if (ans == "")
+        //         ans = thrd;
+        //     else
+        //         ans = min(ans, thrd);
+        // }
+        // if (mini == four) {
+        //     if (ans == "")
+        //         ans = frth;
+        //     else
+        //         ans = min(ans, frth);
+        // }
+        // if (mini == five) {
+        //     if (ans == "")
+        //         ans = ffth;
+        //     else
+        //         ans = min(ans, ffth);
+        // }
+        // if (mini == six) {
+        //     if (ans == "")
+        //         ans = sxth;
+        //     else
+        //         ans = min(ans, sxth);
+        // }
+        // return ans;
     }
 };
