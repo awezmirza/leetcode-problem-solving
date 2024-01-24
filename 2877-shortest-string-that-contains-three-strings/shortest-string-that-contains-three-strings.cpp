@@ -20,12 +20,13 @@ public:
     }
 
     string minimum(string a,string b){
-        if(a.size() == b.size()) return min(a,b); 
+        // If Both are of same size, returning lexicographically smaller string
+        if(a.size() == b.size()) return min(a,b);
         else if(a.size() < b.size()) return a; 
         else return b;
     }
-
     string minimumString(string a, string b, string c) {
+        // There are only 6 Possibilities
         // a -> b -> c
         // a -> c -> b
         // b -> a -> c
@@ -33,6 +34,7 @@ public:
         // c -> a -> b
         // c -> b -> a
 
+        // Finding All Possible Strings
         string fst = fit(fit(a, b), c);
         string scnd = fit(fit(a, c), b);
         string thrd = fit(fit(b, a), c);
@@ -40,9 +42,9 @@ public:
         string ffth = fit(fit(c, a), b);
         string sxth = fit(fit(c, b), a);
 
+        // Finding Minimum of this 6  Strings
         string mini = minimum(fst,minimum(scnd,minimum(thrd,minimum(frth,minimum(ffth,sxth)))));
 
         return mini;
-
     }
 };
