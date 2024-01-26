@@ -1,50 +1,56 @@
 class Solution {
 public:
-    string fit(string fst, string scnd) {
-        int ptr1 = 0, ptr2 = 0;
-        int n = fst.size(), m = scnd.size();
-        string ans = "";
-        for (int i = 0; i < n; i++) {
-            int lastFound = -1;
-            ptr1 = i, ptr2 = 0;
-            if (fst[ptr1] == scnd[ptr2]) {
-                lastFound = ptr1;
-                while (fst[ptr1] == scnd[ptr2]) {
-                    if (ptr1 == n - 1) return fst.substr(0, lastFound) + scnd;
-                    if (ptr2 == m - 1) return fst;
-                    ptr1++, ptr2++;
+    string fit(string a, string b) {
+        int aSze = a.size(), bSze = b.size();
+        for (int i = 0; i < aSze; i++) {
+            int ptr1 = i;
+            int ptr2 = 0;
+            while (a[ptr1] == b[ptr2]) {
+                if (ptr1 == aSze - 1) {
+                    return a + b.substr(ptr2 + 1,bSze-ptr2);
                 }
+                if (ptr2 == bSze - 1) {
+                    return a;
+                }
+                ptr1++,ptr2++;
             }
         }
-        return fst + scnd;
+        return a + b;
     }
 
-    string minimum(string a,string b){
-        // If Both are of same size, returning lexicographically smaller string
-        if(a.size() == b.size()) return min(a,b);
-        else if(a.size() < b.size()) return a; 
-        else return b;
+    string minim(string a, string b) {
+        if (a.size() < b.size()) {
+            return a;
+        } else if (a.size() > b.size()) {
+            return b;
+        } else {
+            return min(a, b);
+        }
     }
+
     string minimumString(string a, string b, string c) {
-        // There are only 6 Possibilities
-        // a -> b -> c
-        // a -> c -> b
-        // b -> a -> c
-        // b -> c -> a
-        // c -> a -> b
-        // c -> b -> a
+        // a->b->c
+        // a->c->b
+        // b->a->c
+        // b->c->a
+        // c->b->a
+        // c->a->b
+        string ab = fit(a, b);
+        string bc = fit(b, c);
+        string ac = fit(a, c);
+        string cb = fit(c, b);
+        string ba = fit(b, a);
+        string ca = fit(c, a);
 
-        // Finding All Possible Strings
-        string fst = fit(fit(a, b), c);
-        string scnd = fit(fit(a, c), b);
-        string thrd = fit(fit(b, a), c);
-        string frth = fit(fit(b, c), a);
-        string ffth = fit(fit(c, a), b);
-        string sxth = fit(fit(c, b), a);
+        string abc = fit(ab, c);
+        string acb = fit(ac, b);
+        string bac = fit(ba, c);
+        string bca = fit(bc, a);
+        string cba = fit(cb, a);
+        string cab = fit(ca, b);
 
-        // Finding Minimum of this 6  Strings
-        string mini = minimum(fst,minimum(scnd,minimum(thrd,minimum(frth,minimum(ffth,sxth)))));
-
+        string mini =
+            minim(abc, minim(acb, minim(bac, minim(bca, minim(cba, cab)))));
         return mini;
     }
 };
