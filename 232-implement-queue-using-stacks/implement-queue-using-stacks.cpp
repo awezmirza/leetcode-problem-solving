@@ -7,14 +7,11 @@ public:
     void push(int x) { a.push(x); }
 
     int pop() {
-        if (!b.empty()) {
-            int x = b.top();
-            b.pop();
-            return x;
-        }
-        while (!a.empty()) {
-            b.push(a.top());
-            a.pop();
+        if (b.empty()) {
+            while (!a.empty()) {
+                b.push(a.top());
+                a.pop();
+            }
         }
         int x = b.top();
         b.pop();
@@ -22,12 +19,11 @@ public:
     }
 
     int peek() {
-        if (!b.empty()) {
-            return b.top();
-        }
-        while (!a.empty()) {
-            b.push(a.top());
-            a.pop();
+        if (b.empty()) {
+            while (!a.empty()) {
+                b.push(a.top());
+                a.pop();
+            }
         }
         return b.top();
     }
