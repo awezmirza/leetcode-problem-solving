@@ -1,17 +1,19 @@
 class Solution {
 public:
     vector<int> rearrangeArray(vector<int>& nums) {
-        vector<int> ngtve;
-        vector<int> pstve;
-        vector<int> ans;
         int n = nums.size();
+        int pstvePtr = 0;
+        int ngtvePtr = 1;
+        vector<int> ans(n,0);
         for(int num:nums){
-            if(num<0) ngtve.push_back(num);
-            else pstve.push_back(num);
-        }
-        for(int i = 0;i<n;i++){
-            if(i % 2 != 0) ans.push_back(ngtve[i/2]);
-            else ans.push_back(pstve[i/2]);   
+            if(num<0){
+                ans[ngtvePtr] = num;
+                ngtvePtr+= 2;
+            } 
+            else{
+                ans[pstvePtr] = num;
+                pstvePtr+= 2;
+            }
         }
         return ans;
     }
