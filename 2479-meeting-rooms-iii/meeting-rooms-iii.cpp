@@ -1,5 +1,5 @@
 #define ll long long
-#define pii pair<ll,ll>
+#define pii pair<ll,int>
 class Solution {
 public:
     int mostBooked(int n, vector<vector<int>>& meetings) {
@@ -12,8 +12,8 @@ public:
 
         sort(meetings.begin(), meetings.end());
         for (auto meeting : meetings) {
-            ll strt = meeting[0];
-            ll end = meeting[1];
+            int strt = meeting[0];
+            int end = meeting[1];
             while (!pq.empty() && pq.top().first <= strt) {
                 freeRooms.push(pq.top().second);
                 pq.pop();
