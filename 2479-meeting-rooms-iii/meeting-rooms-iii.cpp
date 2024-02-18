@@ -4,10 +4,10 @@ class Solution {
 public:
     int mostBooked(int n, vector<vector<int>>& meetings) {
         vector<int> allMeetingHosted(n,0);
-        set<int> st;
         priority_queue<pii, vector<pii>, greater<pii>> pq;
+        priority_queue<int, vector<int>, greater<int>> freeRooms;
         for (int i = 0; i < n; i++) {
-            st.insert(i);
+            freeRooms.push(i);
         }
 
         sort(meetings.begin(), meetings.end());
@@ -15,26 +15,26 @@ public:
             ll strt = meeting[0];
             ll end = meeting[1];
             while (!pq.empty() && pq.top().first <= strt) {
-                st.insert(pq.top().second);
+                freeRooms.push(pq.top().second);
                 pq.pop();
             }
 
-            if (!st.empty()) {
-                auto currRoomAdd = st.begin();
-                allMeetingHosted[*currRoomAdd]++;
-                pq.push({end, *currRoomAdd});
-                st.erase(*currRoomAdd);
+            if (!freeRooms.empty()) {
+                int currRoom = freeRooms.top();
+                freeRooms.pop();
+                allMeetingHosted[currRoom]++;
+                pq.push({end, currRoom});
             }
 
             else {
                 ll diffTime = end - strt;
                 pii p = pq.top();
                 pq.pop();
-                st.insert(p.second);
-                auto currRoomAdd = st.begin();
-                allMeetingHosted[*currRoomAdd]++;
-                pq.push({p.first + diffTime, *currRoomAdd});
-                st.erase(*currRoomAdd);
+                freeRooms.push(p.second);
+                freeRooms.pop();
+                int currRoom = freeRooms.top();
+                allMeetingHosted[currRoom]++;
+                pq.push({p.first + diffTime, currRoom});
             }
         }
         
