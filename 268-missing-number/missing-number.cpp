@@ -1,10 +1,13 @@
 class Solution {
 public:
     int missingNumber(vector<int>& nums) {
-        sort(nums.begin(),nums.end());
         int n = nums.size();
+        vector<bool> numCnt(n);
+        for(int num:nums){
+            numCnt[num] = true;
+        }
         for(int i = 0;i<n;i++){
-            if( i != nums[i]) return i;
+            if(!numCnt[i]) return i;
         }
         return n;
     }
