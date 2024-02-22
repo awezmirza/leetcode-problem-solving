@@ -1,14 +1,13 @@
 class Solution {
 public:
     int findJudge(int n, vector<vector<int>>& trust) {
-        vector<bool> isJudge(n,true);
-        vector<int> isKnownBy(n,0);
+        vector<pair<bool,int>> isJudge(n,{true,0});
         for(vector<int>& tr:trust){
-            isJudge[tr[0]-1] = false;
-            isKnownBy[tr[1]-1]++;
+            isJudge[tr[0]-1].first = false;
+            isJudge[tr[1]-1].second++;
         }
         for(int i = 0; i<n;i++){
-            if(isJudge[i] && isKnownBy[i] == n-1) return i+1;
+            if(isJudge[i].first && isJudge[i].second == n-1) return i+1;
         }
         return -1;
     }
