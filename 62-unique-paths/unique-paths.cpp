@@ -11,14 +11,16 @@ public:
     //     return grid[x][y] = right + down;
     // }
 
-    int helperTab(int destx, int desty){
-        vector<vector<int>> grid(destx , vector<int> (desty,1));
-        for(int x = destx - 2;x>=0;x--){
-            for(int y = desty-2;y>=0;y--){
-                grid[x][y] = grid[x + 1][y] + grid[x][y + 1];
+    int helperTab(int m, int n){
+        vector<int> temp(n,1);
+        for(int x = m - 2;x>=0;x--){
+            vector<int> curr(n,1);
+            for(int y = n-2;y>=0;y--){
+                curr[y] = temp[y] + curr[y + 1];
             }
+            temp = curr;
         }
-        return grid[0][0];
+        return temp[0];
     }
 
     int uniquePaths(int m, int n) {
