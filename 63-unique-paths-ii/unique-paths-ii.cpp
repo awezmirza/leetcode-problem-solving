@@ -13,50 +13,28 @@ class Solution {
     //     return dp[x][y] = down + left;
     // }
 
-    int helper(vector<vector<int>>& obstacleGrid){
-        int maxX = obstacleGrid.size();
-        int maxY = obstacleGrid[0].size();
-        vector<vector<int>> dp(maxX, vector<int> (maxY, 0));
-        for(int i = maxX-1;i>=0;i--){
-            if(obstacleGrid[i][maxY-1] == 1) break;
-            dp[i][maxY-1] = 1;
-        }
-        for(int i = maxY-1;i>=0;i--){
-            if(obstacleGrid[maxX-1][i] == 1) break;
-            dp[maxX-1][i] = 1;
-        }
-        for(int i = 0;i<maxX;i++){
-            for(int j = 0;j<maxY;j++){
-                cout<<dp[i][j]<<" ";
-            }
-            cout<<endl;
-        }
-        cout<<"After"<<endl;
-
-        for(int i = maxX-2;i>=0;i--){
-            for(int j = maxY-2;j>=0;j--){
-                if(i+1 > maxX || j+1 > maxY || obstacleGrid[i][j] == 1) dp[i][j] = 0;
-                else{
-                    int down = dp[i][j + 1];
-                    int left = dp[i + 1][j];
-                    if((long long)left + down < INT_MAX)
-                    dp[i][j] = left + down;
-                }
-            }
-        }
-        for(int i = 0;i<maxX;i++){
-            for(int j = 0;j<maxY;j++){
-                cout<<dp[i][j]<<" ";
-            }
-            cout<<endl;
-        }
-        return dp[0][0];
-    }
-
 public:
     int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
-        
-        int ans = helper(obstacleGrid);
-        return ans;
+        int maxX = obstacleGrid.size();
+        int maxY = obstacleGrid[0].size();
+        vector<int> dp(maxY, 0);
+        for(int i = maxY-1;i>=0;i--){
+            if(obstacleGrid[maxX-1][i] == 1) break;
+            dp[i] = 1;
+        }
+        for(int i = maxX-2;i>=0;i--){
+            vector<int> curr(maxY,0);
+            if(obstacleGrid[i][maxY-1] == 0 && dp[maxY-1] != 0) curr[maxY-1] = 1;
+            for(int j = maxY-2;j>=0;j--){
+                if(obstacleGrid[i][j] == 1) curr[j] = 0;
+                else{
+                    int right = curr[j + 1];
+                    int down = dp[j];
+                    if((long long)right + down <= INT_MAX) curr[j] = right + down;
+                }
+            }
+            dp = curr;
+        }
+        return dp[0];
     }
 };
