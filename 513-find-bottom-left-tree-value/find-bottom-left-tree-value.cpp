@@ -13,23 +13,44 @@ class Solution {
 public:
 
 
-    void solveUsingDFS(TreeNode* root, int depth, pair<int,int>& ansPair){
-        if(!root->left){
-            if(depth > ansPair.first){
-                ansPair = {depth, root->val};
+    // void solveUsingDFS(TreeNode* root, int depth, pair<int,int>& ansPair){
+    //     if(!root->left){
+    //         if(depth > ansPair.first){
+    //             ansPair = {depth, root->val};
+    //         }
+    //     }
+    //     if(!root->left && !root->right) return;
+    //     if(root->left)
+    //         solveUsingDFS(root->left, depth + 1, ansPair);
+    //     if(root->right)
+    //         solveUsingDFS(root->right, depth + 1, ansPair);
+    // }
+
+    int solveUsingBFS(TreeNode* root){
+        // Depth, Val
+        pair<int,int> ans = {0,root->val};
+        queue<pair<int,TreeNode*>> q;
+        q.push({0, root});
+        while(!q.empty()){
+            auto front = q.front();
+            TreeNode* fNode = front.second;
+            int fDepth = front.first;
+            q.pop();
+            if(!fNode->left){
+                if(fDepth>ans.first) ans = {fDepth, fNode->val};
+            }
+            else{
+                q.push({fDepth+1, fNode->left});
+            }
+            if(fNode->right){
+                q.push({fDepth+1, fNode->right});
             }
         }
-        if(!root->left && !root->right) return;
-        if(root->left)
-            solveUsingDFS(root->left, depth + 1, ansPair);
-        if(root->right)
-            solveUsingDFS(root->right, depth + 1, ansPair);
+        return ans.second;
     }
 
     int findBottomLeftValue(TreeNode* root) {
-        // Depth, LeftVal
-        pair<int,int> ansPair = {0, root->val};
-        solveUsingDFS(root, 0, ansPair);
-        return ansPair.second;
+        int ans = solveUsingBFS(root);
+        return ans;
     }
 };
