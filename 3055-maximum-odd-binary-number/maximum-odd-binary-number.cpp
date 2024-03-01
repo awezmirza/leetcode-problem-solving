@@ -1,20 +1,15 @@
 class Solution {
 public:
     string maximumOddBinaryNumber(string s) {
-        int ones = 0;
-        for(auto ch:s){
-            if(ch=='1') ones++;
+        if(s.size() == 1) return "1";
+        int right = s.size() - 1;
+        int left = 0;
+        while(left<=right){
+            if(s[left] == '1') left++;
+            if(s[right] == '0') right--;
+            if(left<right && s[left] =='0' && s[right] =='1') swap(s[left++],s[right--]);
         }
-        int zeroes = s.size() - ones;
-        string ans;
-        while(ones>1){
-            ans.push_back('1');
-            ones--;
-        }
-        while(zeroes--){
-            ans.push_back('0');
-        }
-        ans.push_back('1');
-        return ans;
+        swap(s[left-1],s[s.size()-1]);
+        return s;
     }
 };
