@@ -22,8 +22,16 @@ public:
             }
             fNode = fNode->next;
         }
-        if(prev) prev->next = curr->next;
-        else return head->next;
-        return head;
+        if(prev){
+            prev->next = curr->next;
+            delete(curr);
+            return head;
+        } 
+        else {
+            ListNode* ans = head->next;
+            delete(head);
+            return ans;
+        }
+        
     }
 };
