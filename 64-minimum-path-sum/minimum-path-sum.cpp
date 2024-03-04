@@ -34,9 +34,34 @@ public:
         return dp[0][0];
     }
 
+    int solveSO2(vector<vector<int>>& grid){
+        int m = grid.size();
+        int n = grid[0].size();
+        vector<vector<int>>dp (m, vector<int> (n,0));
+
+        vector<int> next(n,0);
+        next[n-1] = grid[m-1][n-1];
+
+        for(int j = n-2;j>=0;j--){
+            next[j] = grid[m-1][j] + next[j+1];
+        }
+
+        for(int i = m-2;i>=0;i--){
+            vector<int> curr(n,0);
+            curr[n-1] = grid[i][n-1] + next[n-1];
+            for(int j = n-2;j>=0;j--){
+                int left = grid[i][j] + curr[j+1];
+                int down = grid[i][j] + next[j];
+                curr[j] = min(left, down);
+            }
+            next = curr;
+        }
+        return next[0];
+    }
+
     int minPathSum(vector<vector<int>>& grid) {
 
-        int ans = solveSO(grid);
+        int ans = solveSO2(grid);
         return ans;
     }
 };
