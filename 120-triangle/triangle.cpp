@@ -29,8 +29,25 @@ public:
         return dp[0][0];
     }
 
+    int solveSO2(vector<vector<int>>& triangle){
+        int m = triangle.size();
+        vector<vector<int>> dp(m +1,vector<int> (m+1, 0));
+        vector<int> nextRowDP(m + 1, 0);
+
+        for(int row = m-1;row>=0;--row){
+            vector<int> currRowDP(m + 1, 0);
+            for(int col = triangle[row].size()-1; col>=0; col--){
+                int left = triangle[row][col] + nextRowDP[col];
+                int right = triangle[row][col] + nextRowDP[col + 1];
+                currRowDP[col] = min(left, right);
+            }
+            nextRowDP = currRowDP;
+        }
+        return nextRowDP[0];
+    }
+
     int minimumTotal(vector<vector<int>>& triangle) {
-        int ans = solveSO(triangle);
+        int ans = solveSO2(triangle);
         return ans;
     }
 };
