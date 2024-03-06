@@ -2,7 +2,6 @@ class Solution {
 public:
 
     int solveHelper(vector<vector<int>>& matrix, int row, int col, vector<vector<int>>& dp){
-
         if(row >= matrix.size()) return 0;
         if(col<0 || col >= matrix[0].size()) return 1000000;
         if(dp[row][col] != -1000000){
@@ -23,8 +22,6 @@ public:
         vector<vector<int>> dp(rows, vector<int> (cols, -1000000));
         for(int i = 0;i<cols;i++){
             mini = min(mini, solveHelper(matrix, 0, i, dp));
-            mini = min(mini, solveHelper(matrix, 0, i + 1, dp));
-            mini = min(mini, solveHelper(matrix, 0, i - 1, dp));
         }
         return mini;
     }
