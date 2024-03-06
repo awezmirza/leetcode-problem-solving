@@ -59,12 +59,6 @@ public:
         for(int i = 0;i<cols;i++){
             mini = min(dp[0][i], mini);
         }
-        for(auto el:dp){
-            for(auto e: el){
-                cout<<e<<" ";
-            }
-            cout<<endl;
-        }
         return mini;
     }
 
