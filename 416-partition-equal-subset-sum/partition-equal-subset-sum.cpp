@@ -30,6 +30,24 @@ public:
         return dp[0][target];
     }
 
+    bool solveTabSO(vector<int>& nums, int target){
+        vector<int> next(target + 1, 0);
+        next[0] = 1;
+        for(int index = nums.size()-2;index>=0;--index){
+            vector<int> curr(target + 1, 0);
+            curr[0] = 1;
+            for(int tgt = 0;tgt <= target;tgt++){
+                bool take = false;
+                if(tgt - nums[index] >= 0)
+                    take = next[tgt - nums[index]];
+                bool leave = next[tgt];
+                curr[tgt] = take | leave;
+            }
+            next = curr;
+        }
+        return next[target];
+    }
+
 
     bool canPartition(vector<int>& nums) {
         int totalSum = 0;
@@ -37,7 +55,7 @@ public:
         if(totalSum%2 == 1) return false;
         int target = totalSum/2;
 
-        bool ans = solveTab(nums,target);
+        bool ans = solveTabSO(nums,target);
         return ans;
     }
 };
