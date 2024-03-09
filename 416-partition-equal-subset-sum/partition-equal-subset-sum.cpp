@@ -1,23 +1,25 @@
 class Solution {
 public:
 
-    bool solve(vector<int>& nums, int sum1, int index, int& totalSum, vector<vector<int>>& dp){
-        if(index >= nums.size()){
-            if(sum1 == totalSum - sum1) return true;
-            return false;
-        }
-        if(dp[index][sum1] != -1) return dp[index][sum1];
+    bool solve(vector<int>& nums, int target, int index, vector<vector<int>>& dp){
+        if(target == 0) return true;
+        if(index >= nums.size() || target < 0) return false;
+        
+        if(dp[index][target] != -1) return dp[index][target];
 
-        bool nu1 = solve(nums, sum1 + nums[index], index+1, totalSum, dp);
-        bool nu2 = solve(nums, sum1, index+1, totalSum, dp);
-        return dp[index][sum1] = nu1 ||nu2;
+        bool take = solve(nums, target - nums[index], index+1, dp);
+        bool leave = solve(nums, target, index+1, dp);
+        
+        return dp[index][target] = take | leave;
     }
 
     bool canPartition(vector<int>& nums) {
         int totalSum = 0;
-        for(int num:nums) totalSum += num;
-        vector<vector<int>> dp(nums.size(), vector<int> (totalSum, -1));
-        bool ans = solve(nums,0,0, totalSum, dp);
+        for(int num: nums) totalSum += num;
+        if(totalSum%2 == 1) return false;
+        int target = totalSum/2;
+        vector<vector<int>> dp(nums.size(), vector<int> (target + 1, -1));
+        bool ans = solve(nums,target, 0, dp);
         return ans;
     }
 };
