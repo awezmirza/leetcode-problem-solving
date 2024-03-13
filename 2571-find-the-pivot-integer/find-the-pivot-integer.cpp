@@ -6,9 +6,15 @@ public:
             pfSum[i] = i + pfSum[i-1];
         }
         int totSum = pfSum[n];
-        for(int i = 1;i<=n;i++){
-            if(pfSum[i] == totSum - pfSum[i-1]){
-                return i;
+        int st = 1, end = n;
+        while(st<=end){
+            int mid = (st + end)/2;
+            if(pfSum[mid] == totSum - pfSum[mid - 1]) return mid;
+            else if(pfSum[mid] < totSum - pfSum[mid - 1]){
+                st = mid + 1;
+            }
+            else{
+                end = mid -1;
             }
         }
         return -1;
