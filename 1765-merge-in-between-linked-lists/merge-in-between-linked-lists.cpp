@@ -11,25 +11,31 @@
 class Solution {
 public:
     ListNode* mergeInBetween(ListNode* list1, int a, int b, ListNode* list2) {
-        int curr = 1;
         ListNode* ans = list1;
-        ListNode* nxt = list1;
-        while(curr<a){
-            nxt = nxt->next;
-            curr++;
-        }
-        ListNode* tmp = nxt->next;
-        nxt->next = list2; 
-        nxt = nxt->next;
-        while(nxt->next){
-            nxt = nxt->next;
+
+        int ansIterator = 1;
+        ListNode* currNodePointer = list1;
+        while(ansIterator<a){
+            currNodePointer = currNodePointer->next;
+            ansIterator++;
         }
 
-        while(curr<=b){
-            tmp = tmp->next;
-            curr++;
+        ListNode* tmp = currNodePointer->next;
+
+        currNodePointer->next = list2; 
+        currNodePointer = currNodePointer->next;
+        while(currNodePointer->next){
+            currNodePointer = currNodePointer->next;
         }
-        nxt->next = tmp;
+
+        while(ansIterator<=b){
+            ListNode* toDlt = tmp;
+            tmp = tmp->next;
+            delete(toDlt);
+            ansIterator++;
+        }
+        
+        currNodePointer->next = tmp;
         return ans;
     }
 };
