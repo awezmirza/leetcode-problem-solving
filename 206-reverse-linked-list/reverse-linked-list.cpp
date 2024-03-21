@@ -11,22 +11,19 @@
 class Solution {
 public:
 
+    ListNode* solve(ListNode* head, ListNode* nxt){
+        if(!nxt) return head;
+
+        ListNode* temp = nxt;
+        ListNode* ans = solve(head->next, nxt->next);
+        nxt->next = head;
+        return ans;
+    }
+
     ListNode* reverseList(ListNode* head) {
-        if(!head) return NULL;
-        stack<ListNode*> st;
-        while(head){
-            st.push(head);
-            head = head->next;
-        }
-        ListNode* ans = st.top();
-        ListNode* it = ans;
-        st.pop();
-        while(!st.empty()){
-            it->next = st.top();
-            it = it->next;
-            st.pop();
-        }
-        it->next = NULL;
+        if(!head || !head->next) return head;
+        ListNode* ans = solve(head, head->next);
+        head->next = NULL;
         return ans;
     }
 };
