@@ -22,18 +22,20 @@ public:
             slow = slow->next;
         }
         tempSlow->next = NULL;
-        stack<ListNode*> st;
+
+        ListNode* prev = NULL;
         while(slow){
-            st.push(slow);
-            slow = slow->next;
+            ListNode* tmp2 = slow->next;
+            slow->next = prev;
+            prev = slow;
+            slow = tmp2;
         }
 
         ListNode* temp = head;
-
-        while(!st.empty()){
+        while(prev){
             ListNode* curTemp = temp->next;
-            temp->next = st.top();
-            st.pop();
+            temp->next = prev;
+            prev = prev->next;
             temp->next->next = curTemp;
             temp = curTemp;
         }
