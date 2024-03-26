@@ -2,8 +2,6 @@ class Solution {
 public:
     int firstMissingPositive(vector<int>& nums) {
         int n = nums.size();
-        if (n == 1)
-            return nums[0] == 1 ? 2 : 1;
         bool nFnd = 0;
         for (int num : nums) {
             if (num == n)
@@ -20,8 +18,6 @@ public:
                 }
             }
         }
-        for (auto el : nums)
-            cout << el << " " << nFnd;
         for (int i = 1; i < n; i++) {
             if (nums[i] != INT_MIN)
                 return i;
