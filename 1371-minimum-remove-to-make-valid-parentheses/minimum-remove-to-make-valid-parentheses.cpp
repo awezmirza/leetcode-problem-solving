@@ -1,35 +1,30 @@
 class Solution {
 public:
     string minRemoveToMakeValid(string s) {
-        int open = 0;
-        int close = 0;
+        int openCount = 0;
+        int closeCount = 0;
         int n = s.size();
-        for (int i = 0; i < n; i++) {
-            if (s[i] == '(')
-                open++;
-            else if (s[i] == ')' && close < open)
-                close++;
+        for (char ch : s) {
+            if (ch == '(')
+                openCount++;
+            else if (ch == ')' && closeCount < openCount)
+                closeCount++;
         }
-        // o -> 2
-        // c -> 2
-        cout<<"Open: "<<open<<endl;
-        cout<<"Close: "<<close<<endl;
 
-        int currOpen = 0;
-        int currClose = 0;
+        int currOpenCount = 0;
+        int currCloseCount = 0;
         string ans = "";
-        for (int i = 0; i < n; i++) {
-            if (s[i] == '(' && currOpen < open && currOpen < close){
-                ans.push_back(s[i]);
-                currOpen++;
+        for (char ch : s) {
+            if (ch == '(' && currOpenCount < closeCount){
+                ans.push_back(ch);
+                currOpenCount++;
             }
-            else if (s[i] == ')' && currClose < close && currClose < currOpen){
-                cout<<"Inside for i = "<<i<<endl;
-                    ans.push_back(s[i]);
-                    currClose++;
+            else if (ch == ')' && currCloseCount < currOpenCount){
+                ans.push_back(ch);
+                currCloseCount++;
             }
-            else if(s[i] != ')' && s[i] != '('){
-                ans.push_back(s[i]);
+            else if(ch != ')' && ch != '('){
+                ans.push_back(ch);
             }
         }
         return ans;
