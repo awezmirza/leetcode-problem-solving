@@ -6,7 +6,7 @@ public:
         int sandSze = sandwiches.size();
         int ans = stSze;
         int lastNtFnd = -1;
-        while(sandPtr < sandSze){
+        while(sandPtr < sandSze && !(studPtr == lastNtFnd)){
             if(students[studPtr] == sandwiches[sandPtr]){
                 students[studPtr] = -1;
                 sandwiches[sandPtr] = -1;
@@ -14,13 +14,8 @@ public:
                 lastNtFnd = -1;
                 sandPtr++;
             }
-            else{
-                if(lastNtFnd == -1){
-                    lastNtFnd = studPtr;
-                }
-                else if(studPtr == lastNtFnd){
-                    break;
-                }
+            else if(lastNtFnd == -1){
+                lastNtFnd = studPtr;
             }
             studPtr = studPtr + 1 >= stSze ? 0 : studPtr + 1;
         }
