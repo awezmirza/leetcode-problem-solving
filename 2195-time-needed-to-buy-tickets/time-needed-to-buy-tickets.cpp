@@ -7,15 +7,11 @@ public:
         for (int ticket : tickets) {
             q.push(ticket);
         }
-        while (true) {
-            int fr = q.front();
+        while (!(q.front() == 1 && k == 0)) {
+            int fr = --q.front();
             q.pop();
-            fr--;
             ans++;
             if(fr == 0){
-                if(k == 0){
-                    return ans;
-                }
                 n--;
             }
             else{
@@ -23,6 +19,6 @@ public:
             }
             k = k - 1 < 0 ? n - 1 : k - 1;
         }
-        return ans;
+        return ans + 1;
     }
 };
