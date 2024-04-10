@@ -9,12 +9,10 @@ public:
             q.push(i);
         }
         for (int i = 0; i < n; i++) {
-            int fr = q.front();
+            ans[q.front()] = deck[i];
             q.pop();
-            ans[fr] = deck[i];
-            int nextFr = q.front();
+            q.push(q.front());
             q.pop();
-            q.push(nextFr);
         }
         return ans;
     }
