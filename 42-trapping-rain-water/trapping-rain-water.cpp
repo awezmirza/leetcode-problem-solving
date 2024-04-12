@@ -10,8 +10,7 @@ public:
 
         while (leftPtr < rightPtr) {
             if (height[leftPtr] > rightMax){
-                rightPtr--;
-                if (height[rightPtr] < rightMax){
+                if (height[--rightPtr] < rightMax){
                     ans += rightMax - height[rightPtr];
                 }
                 else{
@@ -19,8 +18,7 @@ public:
                 }
             }
             else{
-                leftPtr++;
-                if (height[leftPtr] < leftMax){
+                if (height[++leftPtr] < leftMax){
                     ans += leftMax - height[leftPtr];
                 }
                 else{
