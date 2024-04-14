@@ -11,22 +11,23 @@
  */
 class Solution {
 public:
-
-    void solve(TreeNode* root, int& ans){
-        
-        if(root->left){
-            if(!root->left->left && !root->left->right){
-                ans += root->left->val;
-            }
-            solve(root->left, ans);
-        }
-        if(root->right)
-            solve(root->right, ans);
-    }
-
     int sumOfLeftLeaves(TreeNode* root) {
-        int an = 0;
-        solve(root, an);
-        return an;
+        queue<TreeNode*> q;
+        q.push(root);
+        int ans = 0;
+        while(!q.empty()){
+            TreeNode* front = q.front();
+            q.pop();
+            if(front->left){
+                if(!front->left->left && !front->left->right){
+                    ans += front->left->val;
+                }
+                q.push(front->left);
+            }
+            if(front->right){
+                q.push(front->right);
+            }
+        }
+        return ans;
     }
 };
