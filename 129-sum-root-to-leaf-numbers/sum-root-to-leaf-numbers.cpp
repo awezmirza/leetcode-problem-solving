@@ -17,16 +17,14 @@ public:
             return;
         }
         if(root->left){
-            int temp = sumTillNow;
             sumTillNow = sumTillNow*10 + root->left->val;
             solve(root->left, ans, sumTillNow);
-            sumTillNow = temp;
+            sumTillNow = sumTillNow/10;
         }
         if(root->right){
-            int temp = sumTillNow;
             sumTillNow = sumTillNow*10 + root->right->val;
             solve(root->right, ans, sumTillNow);
-            sumTillNow = temp;
+            sumTillNow = sumTillNow/10;
         }
     }
 
