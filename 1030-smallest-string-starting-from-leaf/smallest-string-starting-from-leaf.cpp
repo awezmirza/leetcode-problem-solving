@@ -13,24 +13,30 @@ class Solution {
 public:
 
     void updateAnsIfSmaller(string& currStr, string& ans){
-        string temp = currStr;
-        reverse(temp.begin(), temp.end());
         if(ans == ""){
-            ans = temp;
+            ans = currStr;
             return;
         }
-        int n = min(temp.size(), ans.size());
-        for(int i = 0; i < n; i++){
-            if(temp[i] < ans[i]){
-                ans = temp;
+
+        int currSize = currStr.size();
+        int ansSize = ans.size();
+
+        int currStrPtr = currStr.size() - 1;
+        int ansPtr = ans.size() - 1;
+
+        while(ansPtr >= 0 && currStrPtr >= 0){
+            if(currStr[currStrPtr] < ans[ansPtr]){
+                ans = currStr;
                 return;
             }
-            else if(temp[i] > ans[i]){
+            else if(currStr[currStrPtr] > ans[ansPtr]){
                 return;
             }
+            ansPtr--;
+            currStrPtr--;
         }
-        if(ans.size() > n){
-            ans = temp;
+        if(ansSize > currSize){
+            ans = currStr;
         }
     }
 
@@ -52,6 +58,7 @@ public:
         string ans = "";
         string currStr = "";
         dfs(root, currStr, ans);
+        reverse(ans.begin(), ans.end());
         return ans;
     }
 };
