@@ -1,1 +1,1 @@
-<h2>smallest-string-starting-from-leaf Notes</h2><hr>[ Time taken: 18 m 36 s ]
+<h2>smallest-string-starting-from-leaf Notes</h2><hr>[ Time taken: 4 m 52 s ]
