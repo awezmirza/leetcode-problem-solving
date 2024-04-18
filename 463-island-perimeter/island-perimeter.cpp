@@ -5,10 +5,6 @@ public:
         int m = grid.size();
         int n = grid[0].size();
 
-        if(i < 0 || j < 0 || i >= m || j >= n){
-            return 0;
-        }
-
         int currPerim = 0;
 
         grid[i][j] = -1;
