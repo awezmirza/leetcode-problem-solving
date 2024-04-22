@@ -9,22 +9,21 @@ public:
         return ch == '9' ? '0' : ch + 1;
     }
 
-    vector<string> findMoves(string pattern){
+    vector<string> findMoves(string& pattern, unordered_set<string>& dead, unordered_set<string>& visited){
         vector<string> response;
+
         for(int i = 0; i < 4; i++){
-
             char ch = pattern[i];
-            char left = moveLeft(ch);
-            char right = moveRight(ch);
 
-            pattern[i] = left;
+            pattern[i] = moveLeft(ch);
             response.push_back(pattern);
 
-            pattern[i] = right;
+            pattern[i] = moveRight(ch);
             response.push_back(pattern);
 
             pattern[i] = ch;
         }
+
         return response;
     }
 
@@ -40,10 +39,9 @@ public:
                 string curr = q.front();
                 q.pop();
                 if(curr == target) return totalNumber;
-                if(dead.find(curr) != dead.end()) continue;
-                if(visited.find(curr) != visited.end()) continue;
+                if(visited.find(curr) != visited.end() || dead.find(curr) != dead.end()) continue;
                 visited.insert(curr);
-                vector<string> nextMoves = findMoves(curr);
+                vector<string> nextMoves = findMoves(curr, dead, visited);
                 for(auto st : nextMoves){
                     q.push(st);
                 }
