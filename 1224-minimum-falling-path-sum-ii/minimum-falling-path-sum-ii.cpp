@@ -77,10 +77,43 @@ public:
         return ans;
     }
 
-    int minFallingPathSum(vector<vector<int>>& grid) {
+    int solveTabSO(vector<vector<int>>& grid){
         int m = grid.size();
         int n = grid[0].size();
-        int ans = solveTab(grid);
+
+        vector<int> nextDP (n);
+
+        for(int j = 0; j < n; j++){
+            nextDP[j] = grid[m - 1][j];
+        }
+
+        for(int i = m - 2; i >= 0; i--){
+            vector<int> currDP (n);
+            for(int j = 0; j < n; j++){
+
+                int minSumTillNow = 1000000;
+
+                for(int k = 0; k < n; k++){
+                    if(k != j){
+                        minSumTillNow = min(minSumTillNow, grid[i][j] + nextDP[k]);
+                    }
+                    currDP[j] = minSumTillNow;
+                }
+            }
+            nextDP = currDP;
+        }
+
+        int ans = 100000000;
+
+        for(int i = 0; i < n; i++){
+            ans = min(ans, nextDP[i]);
+        }
+
+        return ans;
+    }
+
+    int minFallingPathSum(vector<vector<int>>& grid) {
+        int ans = solveTabSO(grid);
         return ans;
     }
 };
