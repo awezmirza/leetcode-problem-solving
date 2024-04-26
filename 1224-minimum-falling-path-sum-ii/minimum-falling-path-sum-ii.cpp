@@ -46,13 +46,41 @@ public:
         return pathSum;
     }
 
-    int minFallingPathSum(vector<vector<int>>& grid) {
+    int solveTab(vector<vector<int>>& grid){
         int m = grid.size();
         int n = grid[0].size();
 
-        vector<vector<int>> dp (m + 1, vector<int> (n + 1, -1));
+        vector<vector<int>> dp (m + 1, vector<int> (n + 1, 0));
 
-        int ans = solveDP(grid, -10, 0, dp);
+        for(int j = 0; j < n; j++){
+            dp[m - 1][j] = grid[m - 1][j];
+        }
+
+        for(int i = m - 2; i >= 0; i--){
+            for(int j = 0; j < n; j++){
+                int minSumTillNow = 1000000;
+                for(int k = 0; k < n; k++){
+                    if(k != j){
+                        minSumTillNow = min(minSumTillNow, grid[i][j] + dp[i + 1][k]);
+                    }
+                    dp[i][j] = minSumTillNow;
+                }
+            }
+        }
+
+        int ans = 100000000;
+
+        for(int i = 0; i < n; i++){
+            ans = min(ans, dp[0][i]);
+        }
+
+        return ans;
+    }
+
+    int minFallingPathSum(vector<vector<int>>& grid) {
+        int m = grid.size();
+        int n = grid[0].size();
+        int ans = solveTab(grid);
         return ans;
     }
 };
