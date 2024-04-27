@@ -46,8 +46,32 @@ public:
         return dp[0][0];
     }
 
+    int solveTabSO(string ring, string key){
+        int m = key.size();
+        int n = ring.size();
+        
+        vector<int> nextDP(n, 0);
+
+        for(int i = m - 1; i >= 0; i--){
+            vector<int> currDP(n, 0);
+            for(int j = 0; j < n; j++){
+
+                int minTotal = INT_MAX;
+                for(int k = 0; k < ring.size(); k++){
+                    if(key[i] == ring[k]){
+                        int currTotal = dis(ring.size(), j, k) + 1 + nextDP[k];
+                        minTotal = min(minTotal, currTotal);
+                    }
+                }
+                currDP[j] = minTotal;
+            }
+            nextDP = currDP;
+        }
+        return nextDP[0];
+    }
+
     int findRotateSteps(string ring, string key) {
-        int ans = solveTab(ring, key);
+        int ans = solveTabSO(ring, key);
         return ans;
     }
 };
