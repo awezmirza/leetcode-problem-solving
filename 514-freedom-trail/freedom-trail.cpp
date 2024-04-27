@@ -24,11 +24,30 @@ public:
         return dp[keyIdx][ringIdx] = minTotal;
     }
 
+    int solveTab(string ring, string key){
+        int m = key.size();
+        int n = ring.size();
+        
+        vector<vector<int>> dp(n, vector<int> (m + 1, 0));
+
+        for(int i = m - 1; i >= 0; i--){
+            for(int j = 0; j < n; j++){
+
+                int minTotal = INT_MAX;
+                for(int k = 0; k < ring.size(); k++){
+                    if(key[i] == ring[k]){
+                        int currTotal = dis(ring.size(), j, k) + 1 + dp[k][i + 1];
+                        minTotal = min(minTotal, currTotal);
+                    }
+                }
+                dp[j][i] = minTotal;
+            }
+        }
+        return dp[0][0];
+    }
+
     int findRotateSteps(string ring, string key) {
-        int n = key.size();
-        int m = ring.size();
-        vector<vector<int>> dp(n, vector<int> (m, -1));
-        int ans = solve(ring, key, 0, 0, dp);
+        int ans = solveTab(ring, key);
         return ans;
     }
 };
