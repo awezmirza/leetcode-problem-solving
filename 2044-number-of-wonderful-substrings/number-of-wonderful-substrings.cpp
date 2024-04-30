@@ -9,13 +9,13 @@ public:
         for(auto ch : word){
 
             int shift = ch - 'a';
-            long long num = 1 << shift;
+            int num = 1 << shift;
             cumXor ^= num;
 
             ans += mp[cumXor];
 
             for(int i = 0; i < 10; i++){
-                long long thisNum = 1 << i;
+                int thisNum = 1 << i;
                 long long oddCumXor = (cumXor ^ thisNum);
                 ans += mp[oddCumXor];
             }
