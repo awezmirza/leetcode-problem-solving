@@ -1,8 +1,17 @@
 class Solution {
 public:
+    int makeNum (int& i, string formula) {
+        string num;
+        int n = formula.size();
+        num.push_back(formula[i++]);
+        while (i < n && formula[i] >= '0' && formula[i] <= '9') {
+            num.push_back(formula[i++]);
+        }
+        int numInt = stoi(num);
+        return numInt;
+    }
+
     string countOfAtoms(string formula) {
-
-
         int i = 0;
         int n = formula.size();
 
@@ -23,16 +32,10 @@ public:
                     element.push_back(formula[i++]);
                 }
 
-                // Make Seperate Function
                 if (i < n && formula[i] >= '0' && formula[i] <= '9') {
-                    string num;
-                    num.push_back(formula[i++]);
-                    while (i < n && formula[i] >= '0' && formula[i] <= '9') {
-                        num.push_back(formula[i++]);
-                    }
                     map<string, int> topMp = st.top();
                     st.pop();
-                    int numInt = stoi(num);
+                    int numInt = makeNum(i, formula);
                     topMp[element] += numInt;
                     st.push(topMp);
                 } else {
@@ -43,29 +46,22 @@ public:
                 }
             }
             else {
-                    i++;
-                    string num;
-                    map<string, int> topMp = st.top();
-                    st.pop();
+                i++;
+                map<string, int> topMp = st.top();
+                st.pop();
 
-                    if (i < n && formula[i] >= '0' && formula[i] <= '9') {
-                        num.push_back(formula[i++]);
-                        while (i < n && formula[i] >= '0' && formula[i] <= '9') {
-                            num.push_back(formula[i++]);
-                        }
-                        int numInt = stoi(num);
-                        for (auto el : topMp) {
-                            topMp[el.first] *= numInt;
-                        }
-                    }
-
-
-                    map<string, int> topBMp = st.top();
-                    st.pop();
+                if (i < n && formula[i] >= '0' && formula[i] <= '9') {
+                    int numInt = makeNum(i, formula);
                     for (auto el : topMp) {
-                        topBMp[el.first] += el.second;
+                        topMp[el.first] *= numInt;
                     }
-                    st.push(topBMp);
+                }
+                map<string, int> topBMp = st.top();
+                st.pop();
+                for (auto el : topMp) {
+                    topBMp[el.first] += el.second;
+                }
+                st.push(topBMp);
             }
         }
 
