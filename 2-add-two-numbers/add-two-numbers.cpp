@@ -49,6 +49,10 @@ public:
             ansPtr->val = carry;
         }
 
-        return ansHead = ansHead->next;
+        ListNode* temp = ansHead;
+        ansHead = ansHead->next;
+        delete(temp);
+
+        return ansHead;
     }
 };
