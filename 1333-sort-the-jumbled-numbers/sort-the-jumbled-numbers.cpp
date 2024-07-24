@@ -19,7 +19,7 @@ public:
 
     vector<int> sortJumbled(vector<int>& mapping, vector<int>& nums) {
 
-        unordered_map<int, vector<int>> fnd;
+        map<int, vector<int>> fnd;
         
         int n = nums.size();
         for (int i = 0; i < n; i++) {
@@ -28,22 +28,10 @@ public:
             fnd[res].push_back(num);
         }
 
-        vector<int> indexes;
-
-        for (auto index : fnd) {
-            cout<<index.first<<" ";
-            indexes.push_back(index.first);
-        }
-
-        sort(indexes.begin(), indexes.end());
-
         vector<int> ans;
 
-        for (auto index : indexes) {
-            for (int nu : fnd[index]) {
-                if (index == 7) {
-                    cout<<nu<<" ";
-                }
+        for (auto m : fnd) {
+            for (int nu : m.second) {
                 ans.push_back(nu);
             }
         }
