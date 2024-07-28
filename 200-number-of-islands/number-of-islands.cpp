@@ -1,40 +1,55 @@
 class Solution {
 public:
 
-    void dfs(vector<vector<char>>& grid, int i, int j){
-
+    void dfs(int i, int j, vector<vector<char>>& grid) {
         int m = grid.size();
         int n = grid[0].size();
-        
-        grid[i][j] = '0';
 
-        if(i > 0 && grid[i - 1][j] == '1'){
-            dfs(grid, i - 1, j);
+        if (i < 0 || j < 0 || i >= m || j >= n) {
+            return;
         }
-        if(i < m - 1 && grid[i + 1][j] == '1'){
-            dfs(grid, i + 1, j);
+
+        //  Up
+        if (i > 0 && grid[i - 1][j] == '1') {
+            grid[i - 1][j] = '0';
+            dfs(i - 1, j, grid);
         }
-        if(j > 0 && grid[i][j - 1] == '1'){
-            dfs(grid, i, j - 1);
+
+        // //  Down
+        if (i < m - 1 && grid[i + 1][j] == '1') {
+            grid[i + 1][j] = '0';
+            dfs(i + 1, j, grid);
         }
-        if(j < n - 1 && grid[i][j + 1] == '1'){
-            dfs(grid, i, j + 1);
+
+        // //  Left
+        if (j > 0 && grid[i][j - 1] == '1') {
+            grid[i][j - 1] = '0';
+            dfs(i, j - 1, grid);
         }
-        
+
+        //  Right
+        if (j < n - 1 && grid[i][j + 1] == '1') {
+            grid[i][j + 1] = '0';
+            dfs(i, j + 1, grid);
+        }
     }
 
     int numIslands(vector<vector<char>>& grid) {
         int m = grid.size();
         int n = grid[0].size();
-        int numOfIslands = 0;
-        for(int i = 0; i < m; i++){
-            for(int j = 0; j < n; j++){
-                if(grid[i][j] == '1'){
-                    dfs(grid, i, j);
-                    numOfIslands++;
+
+        int ans = 0;
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == '1') {
+                    grid[i][j] = '0';
+                    dfs(i, j, grid);
+                    ans++;
                 }
             }
         }
-        return numOfIslands;
+
+        return ans;
     }
 };
