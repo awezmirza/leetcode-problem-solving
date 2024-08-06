@@ -1,30 +1,33 @@
 class Solution {
 public:
     int trap(vector<int>& height) {
-        int leftMax = height.front();
-        int rightMax = height.back();
-        int leftPtr = 0;
-        int rightPtr = height.size() - 1;
+        int n = height.size();
 
-        int ans = 0;
+        vector<int> prevGreater(n, 0);
+        prevGreater[0] = 0;
+        int maxi = height[0];
+        for (int i = 1; i < n; i++) {
+            prevGreater[i] = maxi;
+            maxi = max(maxi, height[i]);
+        }
 
-        while (leftPtr < rightPtr) {
-            if (height[leftPtr] > rightMax){
-                if (height[--rightPtr] < rightMax){
-                    ans += rightMax - height[rightPtr];
-                }
-                else{
-                    rightMax = max(rightMax, height[rightPtr]);
-                }
-            }
-            else{
-                if (height[++leftPtr] < leftMax){
-                    ans += leftMax - height[leftPtr];
-                }
-                else{
-                    leftMax = max(leftMax, height[leftPtr]);
-                }
-            }
+        vector<int> nextGreater(n, 0);
+        nextGreater[n - 1] = 0;
+        maxi = height[n - 1];
+        for (int i = n - 2; i >= 0; i--) {
+            nextGreater[i] = maxi;
+            maxi = max(maxi, height[i]);
+        }
+
+        vector<int> waterLogged(n, 0);
+        int ans = waterLogged[0];
+        for (int i = 0; i < n; i++) {
+            int currHeight = min(prevGreater[i], nextGreater[i]);
+            waterLogged[i] = max(0, currHeight - height[i]);
+        }
+
+        for (int i = 1; i < n; i++) {
+            ans += waterLogged[i];
         }
 
         return ans;
