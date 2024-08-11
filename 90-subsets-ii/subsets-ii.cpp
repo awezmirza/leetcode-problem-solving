@@ -8,13 +8,9 @@ public:
         }
 
         // Take
-        // for (int i = index; i < nums.size(); i++) {
-            // swap(nums[i], nums[index]);
-            curr.push_back(nums[index]);
-            solve(ansSet, nums, curr, index + 1);
-            curr.pop_back();
-            // swap(nums[i], nums[index]);
-        // }
+        curr.push_back(nums[index]);
+        solve(ansSet, nums, curr, index + 1);
+        curr.pop_back();
 
         // Leave
         solve(ansSet, nums, curr, index + 1);
@@ -25,7 +21,6 @@ public:
         set<vector<int>> ansSet;
         vector<int> curr = {};
         solve(ansSet, nums, curr, 0);
-        vector<vector<int>> ans = {ansSet.begin(), ansSet.end()};
-        return ans;
+        return {ansSet.begin(), ansSet.end()};
     }
 };
