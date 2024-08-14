@@ -22,8 +22,20 @@ public:
         return dp[i][j] = right + down;
     }
 
+    int solveSO(int m, int n) {
+        vector<int> prev(n + 1, 1);
+        for (int i = m - 1; i >= 1; i--) {
+            vector<int> curr (n + 1, 0);
+            curr[n] = 1;
+            for (int j = n - 1; j >= 1; j--) {
+                curr[j] = prev[j] + curr[j + 1];
+            }
+            prev = curr;
+        }
+        return prev[1];
+    }
+
     int uniquePaths(int m, int n) {
-        vector<vector<int>> dp(m + 1, vector<int> (n + 1, -1));
-        return solve(m, n, 1, 1, dp);
+        return solveSO(m, n);
     }
 };
