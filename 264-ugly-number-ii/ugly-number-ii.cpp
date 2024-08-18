@@ -1,17 +1,17 @@
 class Solution {
 public:
     int nthUglyNumber(int n) {
-        set<long long> st;
+        set<long> st;
         st.insert(1);
-        long long i = 1;
-        while (i < n) {
-            long long tp = *(st.begin());
+        n--;
+        while (n) {
+            long tp = *st.begin();
             st.erase(tp);
             st.insert(tp * 2);
             st.insert(tp * 3);
             st.insert(tp * 5);
-            i++;
+            n--;
         }
-        return *(st.begin());
+        return *st.begin();
     }
 };
