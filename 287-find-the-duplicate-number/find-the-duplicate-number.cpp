@@ -1,10 +1,14 @@
 class Solution {
 public:
     int findDuplicate(vector<int>& nums) {
-        vector<bool> freq(100001, 0);
-        for(auto num:nums){
-            if(freq[num]) return num;
-            freq[num] = true;
+        int n = nums.size();
+        for (int i = 0; i < n; i++) {
+            int idx = abs(nums[i]) - 1;
+            if (nums[idx] < 0) {
+                return idx + 1;
+            } else {
+                nums[idx] *= -1;
+            }
         }
         return 0;
     }
