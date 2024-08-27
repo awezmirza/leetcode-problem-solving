@@ -1,34 +1,43 @@
 class MyQueue {
+    stack<int> s1;
+    stack<int> s2;
 public:
-    stack<int> a;
-    stack<int> b;
-    MyQueue() {}
-
-    void push(int x) { a.push(x); }
-
+    void push(int x) {
+        if (s1.empty() && s2.empty()) {
+            s1.push(x);
+        } else {
+            s2.push(x);
+        }
+    }
+    
     int pop() {
-        if (b.empty()) {
-            while (!a.empty()) {
-                b.push(a.top());
-                a.pop();
+        if (s1.empty()) {
+            while (!s2.empty()) {
+                s1.push(s2.top());
+                s2.pop();
             }
         }
-        int x = b.top();
-        b.pop();
-        return x;
+        int temp = s1.top();
+        s1.pop();
+        return temp;
     }
-
+    
     int peek() {
-        if (b.empty()) {
-            while (!a.empty()) {
-                b.push(a.top());
-                a.pop();
+        if (s1.empty()) {
+            while (!s2.empty()) {
+                s1.push(s2.top());
+                s2.pop();
             }
         }
-        return b.top();
+        return s1.top();
     }
-
-    bool empty() { return a.empty() && b.empty(); }
+    
+    bool empty() {
+        if (s1.empty() && s2.empty()) {
+            return true;
+        }
+        return false;
+    }
 };
 
 /**
