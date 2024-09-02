@@ -7,13 +7,11 @@ public:
         }
         k = k % total;
         int i = 0;
-        int n = chalk.size();
-        while (i < n && k > 0) {
+        while (k > 0) {
             k -= chalk[i];
-            if (k < 0) {
-                return i;
+            if (k >= 0) {
+                i++;
             }
-            i++;
         }
         return i;
     }
