@@ -1,6 +1,7 @@
 class Solution {
 public:
     int robotSim(vector<int>& commands, vector<vector<int>>& obstacles) {
+
         // N => 0
         // E => 1
         // S => 2
@@ -13,19 +14,14 @@ public:
         unordered_set<string> st;
         for (auto obstacle : obstacles) {
             string key = to_string(obstacle[0]) + "_" + to_string(obstacle[1]);
-            cout<<key<<" ";
             st.insert(key);
         }
-        cout<<endl;
 
         for (int command : commands) {
             if (command == -1) {
                 dirn = (dirn + 1) % 4;
             } else if (command == -2) {
-                if (dirn == 0) {
-                    dirn = 3;
-                } else 
-                    dirn = (dirn - 1) % 4;
+                dirn = dirn == 0 ? 3 : (dirn - 1);
             } else {
                 for (int step = 0; step < command; step++) {
                     
@@ -43,7 +39,6 @@ public:
                     }
 
                     string key = to_string(newX) + "_" + to_string(newY);
-                    cout<<key<<" ";
                     if (st.find(key) != st.end()) {
                         break;
                     }
