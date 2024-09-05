@@ -11,20 +11,13 @@
 class Solution {
 public:
 
-    int solve(ListNode* head, int& ans) {
-        if (!head) {
-            return 0;
-        }
-        int val = solve(head->next, ans);
-        if (head->val == 1) {
-            ans += (1 << val);
-        }
-        return val + 1;
-    }
-
     int getDecimalValue(ListNode* head) {
         int ans = 0;
-        solve(head, ans);
+        while (head) {
+            ans <<= 1;
+            ans += head->val;
+            head = head->next;
+        }
         return ans;
     }
 };
