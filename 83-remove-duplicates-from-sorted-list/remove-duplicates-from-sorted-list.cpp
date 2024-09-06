@@ -11,15 +11,15 @@
 class Solution {
 public:
     ListNode* deleteDuplicates(ListNode* head) {
-        unordered_set<int> st;
         ListNode* newHead = new ListNode();
         ListNode* temp = newHead;
+        int prev = 101;
         while (head) {
-            if (!st.count(head->val)) {
+            if (head->val != prev) {
                 temp->next = head;
                 temp = temp->next;
-                st.insert(head->val);
             }
+            prev = head->val;
             head = head->next;
         }
         temp->next = NULL;
