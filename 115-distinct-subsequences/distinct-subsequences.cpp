@@ -46,7 +46,32 @@ public:
         return dp[0][0];
     }
 
+    int solveSO2(string s, string t) {
+        int m = s.size();
+        int n = t.size();
+        vector<int> dp(n + 1, 0);
+        dp[n] = 1;
+
+        for (int i = m - 1; i >= 0; i--) {
+            vector<int> curr(n + 1, 0);
+            curr[n] = 1;
+            for (int j = n - 1; j >= 0; j--) {
+                int take = 0;
+                if (s[i] == t[j]) {
+                    take = dp[j + 1];
+                }
+                int leave = dp[j];
+
+                if ((double) take + leave <= INT_MAX) {
+                    curr[j] = take + leave;
+                }
+            }
+            dp = curr;
+        }
+        return dp[0];
+    }
+
     int numDistinct(string s, string t) {
-        return solveSO(s, t); 
+        return solveSO2(s, t); 
     }
 };
