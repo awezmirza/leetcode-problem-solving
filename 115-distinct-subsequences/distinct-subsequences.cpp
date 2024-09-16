@@ -21,10 +21,32 @@ public:
         return dp[sPtr][tPtr] = take + leave;
     }
 
-    int numDistinct(string s, string t) {
+    int solveSO(string s, string t) {
         int m = s.size();
         int n = t.size();
-        vector<vector<int>> dp(m, vector<int> (n, -1));
-        return solve(s, t, 0, 0, dp); 
+        vector<vector<int>> dp(m + 1, vector<int> (n + 1, 0));
+
+        for (int j = m; j >= 0; j--) {
+            dp[j][n] = 1;
+        }
+
+        for (int i = m - 1; i >= 0; i--) {
+            for (int j = n - 1; j >= 0; j--) {
+                int take = 0;
+                if (s[i] == t[j]) {
+                    take = dp[i + 1][j + 1];
+                }
+                int leave = dp[i + 1][j];
+
+                if ((double) take + leave <= INT_MAX) {
+                    dp[i][j] = take + leave;
+                }
+            }
+        }
+        return dp[0][0];
+    }
+
+    int numDistinct(string s, string t) {
+        return solveSO(s, t); 
     }
 };
