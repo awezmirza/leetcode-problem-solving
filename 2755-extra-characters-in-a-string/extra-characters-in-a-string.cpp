@@ -1,30 +1,28 @@
 class Solution {
 public:
-    int solve(int i, string& s, unordered_set<string>& st, int left, vector<vector<int>>& dp) {
+    
+    int solve(int i, string& s, unordered_set<string>& st, vector<int>& dp) {
         int n = s.size();
         if (i >= n) {
-            return left;
+            return 0;
         }
 
-        if (dp[i][left] != -1) {
-            return dp[i][left];
-        } 
-
+        if (dp[i] != -1) {
+            return dp[i];
+        }
+        
+        int ans = n;
+        ans = min(ans, 1 + solve(i + 1, s, st, dp));
         string curr = "";
-        int ans = 51;
-        int j = i;
-        int preLeft = left;
+        int preI = i;
         while (i < n) {
             curr.push_back(s[i]);
-            left++;
             i++;
             if (st.count(curr)) {
-                ans = min(ans, solve(i, s, st, left - curr.size(), dp));
-            } else {
-                ans = min(ans, solve(i, s, st, left, dp));
+                ans = min(solve(i, s, st, dp), ans);
             }
         }
-        return dp[j][preLeft] = ans;
+        return dp[preI] = ans;
     }
 
     int minExtraChar(string s, vector<string>& dictionary) {
@@ -33,8 +31,9 @@ public:
             st.insert(word);
         }
         int n = s.size();
-        vector<vector<int>> dp(n, vector<int> (n, -1));
-        int ans = solve(0, s, st, 0, dp);
+        vector<int> dp(n, -1);
+
+        int ans = solve(0, s, st, dp);
         return ans;
     }
 };
