@@ -2,8 +2,7 @@ class Solution {
 
     struct Trie {
         Trie* next[26] = {};
-        int currCnt;
-        Trie() : currCnt(0) {}
+        int currCnt = 0;
     };
 
     void insert(Trie* root, string& s) {
@@ -37,11 +36,9 @@ public:
             insert(root, word);
         }
         int n = words.size();
-        vector<int> ans(n, 0);
-        int i = 0;
+        vector<int> ans;
         for (string& word : words) {
-            ans[i] = prefixScore(root, word);
-            i++;
+            ans.push_back(prefixScore(root, word));
         }
         return ans;
     }
