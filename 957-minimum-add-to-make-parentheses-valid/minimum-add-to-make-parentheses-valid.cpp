@@ -3,12 +3,10 @@ public:
     int minAddToMakeValid(string s) {
         stack<char> st;
         for (auto c : s) {
-            if (c == '(') {
+            if (c == '(' || !(!st.empty() && st.top() == '(')) {
                 st.push(c);
-            } else if (!st.empty() && st.top() == '(') {
+            } else { 
                 st.pop();
-            } else {
-                st.push(c);
             }
         }
         return st.size();
