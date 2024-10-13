@@ -15,19 +15,16 @@ public:
         vector<int> cnt(k, 0);
         int i = 0;
         int j = 0;
-        for (auto el : arr) {
-            cout<<"{"<<el.first<<","<<el.second<<"}"<<" ";
-        }
+
         while (j < n && st.size() != k) {
             st.insert(arr[j].second);
             cnt[arr[j].second]++;
             j++;
         }
-        // cout<<"\n"<<j;
         bool allSet = true;
 
         vector<int> ans = {arr[0].first, arr[j - 1].first};
-        while (i < n) {
+        while (i < n && !(!allSet && j == n)) {
             if (allSet) {
                 vector<int> currAns = {arr[i].first, arr[j - 1].first};
                 int c = ans[0];
@@ -43,9 +40,6 @@ public:
                     allSet = false;
                 }
             } else {
-                if (j == n) {
-                    break;
-                }
                 if (cnt[arr[j].second] == 0) {
                     allSet = true;
                 }
