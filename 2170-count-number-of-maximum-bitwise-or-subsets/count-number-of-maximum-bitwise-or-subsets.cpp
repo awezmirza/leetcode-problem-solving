@@ -1,25 +1,25 @@
 class Solution {
 public:
-    void solve(int ind, int tempOr, vector<int>& nums, int& maxOr, int& cnt) {
-        int n = nums.size();
-        if (ind == n) {
-            if (tempOr == maxOr) {
+    void findSubsets(int i, vector<int>& nums, int& cnt, int currOr, int& maxiOr) {
+        if (i >= nums.size()) {
+            if (currOr == maxiOr) {
                 cnt++;
             }
             return;
         }
-        solve(ind + 1, tempOr | nums[ind], nums, maxOr, cnt);
-        solve(ind + 1, tempOr, nums, maxOr, cnt);
+        findSubsets(i + 1, nums, cnt, currOr, maxiOr);
+        findSubsets(i + 1, nums, cnt, currOr | nums[i], maxiOr);
     }
+
     int countMaxOrSubsets(vector<int>& nums) {
         int n = nums.size();
-        int maxOr = 0;
-        for (int i = 0; i < n; i++) {
-            maxOr = maxOr | nums[i];
+        int maxiOr = 0;
+        for (int num : nums) {
+            maxiOr = maxiOr | num;
         }
-        int tempOr = 0;
-        int ans = 0;
-        solve(0, tempOr, nums, maxOr, ans);
-        return ans;
+        int cnt = 0;
+        findSubsets(0, nums, cnt, 0, maxiOr);
+        
+        return cnt;
     }
 };
