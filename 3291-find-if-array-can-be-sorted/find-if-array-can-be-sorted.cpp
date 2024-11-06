@@ -9,11 +9,11 @@ public:
         int prevMaxi = -1;
         int currMaxi = INT_MIN;
         int currMin = INT_MAX;
+        int i = 0;
 
-        for (int i = 0; i < n;) {
-            int currppCnt = ppcnt[i];
-
-            while (i < n && currppCnt == ppcnt[i]) {
+        while (i < n) {
+            int currppCnt = __builtin_popcount(nums[i]);
+            while (i < n && currppCnt == __builtin_popcount(nums[i])) {
                 currMaxi = max(currMaxi, nums[i]);
                 currMin = min(currMin, nums[i]);
                 i++;
@@ -25,31 +25,6 @@ public:
             currMaxi = INT_MIN;
             currMin = INT_MAX;
         }
-
-
-        // cout<<ppcnt[0]<<" ";
-        // for (int i = 1; i < n; i++) {
-        //     cout<<ppcnt[i]<<" ";
-        //     if (currMin < prevMaxi) {
-        //         return false;
-        //     }
-        //     if (ppcnt[i] == ppcnt[i - 1]) {
-        //         currMaxi = max(currMaxi, nums[i]);
-        //         currMin = min(currMin, nums[i]);
-        //     } else {
-        //         prevMaxi = currMaxi;
-        //         currMaxi = nums[i];
-        //         currMin = nums[i];
-        //     }
-        // }
-
-        // vector<int> maxiInGrp(n, 0);
-        // for (int i = 0; i < n; i) {
-        //     int prevppcnt = ppcnt[i];
-        //     while (i < n && ppcnt[i] == prevppcnt) {
-                
-        //     }
-        // }
         return true;
     }
 };
