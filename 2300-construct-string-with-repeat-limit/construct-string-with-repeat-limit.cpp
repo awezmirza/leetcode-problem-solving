@@ -1,0 +1,44 @@
+class Solution {
+public:
+    string repeatLimitedString(string s, int repeatLimit) {
+        vector<int> freq(26, 0);
+        for (char c : s) {
+            freq[c - 'a']++;
+        }
+        string ans;
+        bool used = true;
+        bool repeated = false;
+        int ptr = 25;
+        while (used && ptr >=0) {
+            used = false;
+            if (freq[ptr] == 0) {
+                ptr--;
+                used = true;
+            } else {
+                if (!repeated) {
+                    int cycle = min(repeatLimit, freq[ptr]);
+                    for (int i = 0; i < cycle; i++) {
+                        ans.push_back(ptr + 'a');
+                    }
+                    if (cycle != freq[ptr]) {
+                        repeated = true;
+                    }
+                    freq[ptr] -= cycle;
+                    used = true;
+                } else {
+                    int toFind = ptr - 1;
+                    while (toFind >= 0 && !used) {
+                        if (freq[toFind] > 0) {
+                            ans.push_back(toFind + 'a');
+                            freq[toFind]--;
+                            used = true;
+                            repeated = false;
+                        }
+                        toFind--;
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+};
