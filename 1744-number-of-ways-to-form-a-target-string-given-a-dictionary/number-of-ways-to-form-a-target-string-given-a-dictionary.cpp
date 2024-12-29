@@ -29,17 +29,18 @@ class Solution {
 
 public:
     int numWays(vector<string>& words, string target) {
-        vector<vector<int>> dp(1001, vector<int>(1001, -1));
 
         int lng = words[0].size();
+        int tgtSz = target.size();
         vector<unordered_map<char, int>> mp(lng);
 
         for (auto& word : words) {
-            int n = word.size();
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < lng; i++) {
                 mp[i][word[i]]++;
             }
         }
+
+        vector<vector<int>> dp(lng + 1, vector<int>(tgtSz + 1, -1));
 
         int ans = solve(target, 0, 0, lng, dp, mp);
         return ans;
