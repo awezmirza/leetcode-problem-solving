@@ -1,11 +1,11 @@
 class Solution {
     const int MOD = 1000000007;
 
-    int solve(string& target, int i, int t, int& longestWordSize, vector<vector<int>>& dp, vector<unordered_map<char, int>>& mp) {
+    int solve(string& target, int i, int t, int& lng, vector<vector<int>>& dp, vector<unordered_map<char, int>>& mp) {
         if (t >= target.size()) {
             return 1;
         }
-        if (i >= longestWordSize) {
+        if (i >= lng) {
             return 0;
         }
 
@@ -19,10 +19,10 @@ class Solution {
         int totalTargetsOnThisI = mp[i][toFind];
 
         if (totalTargetsOnThisI > 0) {
-            ans = (ans + (1LL * totalTargetsOnThisI * solve(target, i + 1, t + 1, longestWordSize, dp, mp)) % MOD) % MOD;
+            ans = (ans + (1LL * totalTargetsOnThisI * solve(target, i + 1, t + 1, lng, dp, mp)) % MOD) % MOD;
         }
         
-        ans = (ans + solve(target, i + 1, t, longestWordSize, dp, mp)) % MOD;
+        ans = (ans + solve(target, i + 1, t, lng, dp, mp)) % MOD;
 
         return dp[i][t] = ans;
     }
@@ -30,12 +30,9 @@ class Solution {
 public:
     int numWays(vector<string>& words, string target) {
         vector<vector<int>> dp(1001, vector<int>(1001, -1));
-        int longestWordSize = 0;
 
-        for (auto& word : words) {
-            longestWordSize = max(longestWordSize, int(word.size()));
-        }
-        vector<unordered_map<char, int>> mp(longestWordSize);
+        int lng = words[0].size();
+        vector<unordered_map<char, int>> mp(lng);
 
         for (auto& word : words) {
             int n = word.size();
@@ -44,7 +41,7 @@ public:
             }
         }
 
-        int ans = solve(target, 0, 0, longestWordSize, dp, mp);
+        int ans = solve(target, 0, 0, lng, dp, mp);
         return ans;
     }
 };
