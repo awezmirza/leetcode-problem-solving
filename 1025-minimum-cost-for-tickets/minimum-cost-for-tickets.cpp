@@ -6,27 +6,21 @@ public:
         if (idx >= n) {
             return 0;
         }
-
-        if (currDay > 365) {
-            return 1000004;
+        if (currDay > days[idx]) {
+            return solve(days, costs, idx + 1, currDay, dp);
         }
 
         if (dp[idx][currDay] != -1) {
             return dp[idx][currDay];
         }
 
-        if (currDay > days[idx]) {
-            return solve(days, costs, idx + 1, currDay, dp);
+        if (days[idx] != currDay) {
+            return solve(days, costs, idx, currDay + 1, dp);
         }
 
         // 1 Day wala lege
-        int oneDay = 1000001;
-        if (days[idx] == currDay) {
-            oneDay = costs[0] + solve(days, costs, idx + 1, currDay + 1, dp);
-        } else {
-            oneDay = solve(days, costs, idx, currDay + 1, dp);
-        }
-
+        int oneDay = oneDay = costs[0] + solve(days, costs, idx + 1, currDay + 1, dp);
+        
         // 7 Day wala lege
         int sevenDay = costs[1] + solve(days, costs, idx + 1, currDay + 7, dp);
 
