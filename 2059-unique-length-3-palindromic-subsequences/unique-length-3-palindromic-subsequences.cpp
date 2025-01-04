@@ -1,26 +1,47 @@
 class Solution {
 public:
     int countPalindromicSubsequence(string s) {
-        unordered_set <string> ansSet;
-        vector <int> left(26),right(26);
+        vector<int> first(26, -1);
+        vector<int> last(26, -1);
         int n = s.size();
-        for(int i = 0;i<n;i++){
-            right[ s[i] - 'a']++;
-        }
-        for(int i = 0;i<n-1;i++){
-            right[s[i]- 'a']--;
-            for(int j = 0;j<26;j++){
-                if(left[j] >0 && right[j] > 0 ){
-                    char temp = 'a' + j;
-                    string pal = "";
-                    pal += temp;
-                    pal += s[i];
-                    pal += temp;
-                    ansSet.insert(pal);
+        vector<int> unique(n, 0);
+        unique[0] = 1;
+
+        for (int i = 0; i < n; i++) {
+            char c = s[i];
+
+            if (i != 0) {
+                if (first[c - 'a'] == -1) {
+                    unique[i] = unique[i - 1] + 1;
+                } else {
+                    unique[i] = unique[i - 1];
                 }
             }
-            left[s[i] - 'a']++;
+
+            if (first[c - 'a'] == -1) {
+                first[c - 'a'] = i;
+            } else {
+                last[c - 'a'] = i;
+            }
         }
-        return ansSet.size();
+
+        int ans = 0;
+
+        for (int i = 0; i < 26; i++) {
+            if (last[i] != -1) {
+                int frst = first[i];
+                int lst = last[i];
+
+                unordered_set<char> st;
+
+                for (int j = frst + 1; j < lst; j++) {
+                    st.insert(s[j]);
+                }
+
+                ans += st.size();
+            }
+        }
+
+        return ans;
     }
 };
