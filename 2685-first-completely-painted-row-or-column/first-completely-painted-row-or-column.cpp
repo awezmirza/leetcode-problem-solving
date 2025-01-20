@@ -5,8 +5,8 @@ public:
 
         int n = mat.size();
         int m = mat[0].size();
-        vector<unordered_set<int>> col(m);
-        vector<unordered_set<int>> row(n);
+        vector<int> col(m);
+        vector<int> row(n);
 
         for (int i = 0; i < n; i++) {
 
@@ -14,9 +14,6 @@ public:
                 int val = mat[i][j];
 
                 mp[val] = {i, j};
-
-                row[i].insert(val);
-                col[j].insert(val);
             }
         }
 
@@ -28,10 +25,10 @@ public:
             int rowIdx = mp[val].first;
             int colIdx = mp[val].second;
 
-            row[rowIdx].erase(val);
-            col[colIdx].erase(val);
+            row[rowIdx]++;
+            col[colIdx]++;
 
-            if (row[rowIdx].size() == 0 || col[colIdx].size() == 0) {
+            if (row[rowIdx] == m || col[colIdx] == n) {
                 return i;
             }
         }
