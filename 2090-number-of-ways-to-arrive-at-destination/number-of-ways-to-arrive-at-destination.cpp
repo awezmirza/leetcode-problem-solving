@@ -1,6 +1,6 @@
 class Solution {
 
-    void dijktras(unordered_map<int, vector<pair<int, int>>>& mp, vector<long long>& dist, vector<int>& ways) {
+    void dijktras(unordered_map<int, vector<pair<int, int>>>& mp, vector<pair<long long, long long>>& shortest) {
         // Time, Node
         priority_queue<pair<long long, int>, vector<pair<long long, int>>, greater<pair<long long, int>>> pq;
         pq.push({0, 0});
@@ -10,17 +10,12 @@ class Solution {
             long long wt = pq.top().first;
             pq.pop();
 
-            // if (wt > dist[tp]) {
-            //     continue;
-            // } 
-
-            for (auto& [node, time] : mp[tp]) {
-                if (wt + time < dist[node]) {
-                    dist[node] = (long long)wt + time;
-                    ways[node] = ways[tp];
-                    pq.push({(long long)wt + time, node});
-                } else if ((long long)wt + time == dist[node]) {
-                    ways[node] = (ways[node] + ways[tp]) % 1000000007;
+            for (auto& nbr : mp[tp]) {
+                if (wt + nbr.second < shortest[nbr.first].first) {
+                    shortest[nbr.first] = {wt + nbr.second, shortest[tp].second};
+                    pq.push({wt + nbr.second , nbr.first});
+                } else if (wt + nbr.second == shortest[nbr.first].first) {
+                    shortest[nbr.first].second = (shortest[nbr.first].second + shortest[tp].second) % 1000000007;
                 }
             }
         }
@@ -28,7 +23,6 @@ class Solution {
 
 public:
     int countPaths(int n, vector<vector<int>>& roads) {
-        // Node, Time
         unordered_map<int, vector<pair<int, int>>> mp;
         for (auto& road : roads) {
             int u = road[0];
@@ -40,14 +34,11 @@ public:
         }
 
         // Shortest dist, incoming
-        vector<long long> dist(n, LLONG_MAX);
-        vector<int> ways(n, 0);
+        vector<pair<long long, long long>> shortest(n, {LLONG_MAX, 0});
+        shortest[0] = {0, 1};
 
-        dist[0] = 0;
-        ways[0] = 1;
+        dijktras(mp, shortest);
 
-        dijktras(mp, dist, ways);
-
-        return ways[n - 1];
+        return shortest[n - 1].second;
     }
 };
