@@ -19,13 +19,6 @@ class Solution {
         }
         newRange.push_back({st, en});
 
-        for (auto rng : newRange) {
-            cout<<rng[0]<<", "<<rng[1]<<" -- ";
-        }
-        cout<<endl;
-
-        // cout<<newRange.size()<<" ";
-
         return newRange.size() >= 3;
     }
 
