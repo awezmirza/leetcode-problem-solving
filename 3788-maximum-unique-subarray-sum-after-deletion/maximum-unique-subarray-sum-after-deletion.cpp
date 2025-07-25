@@ -2,14 +2,9 @@ class Solution {
 public:
     int maxSum(vector<int>& nums) {
 
-        sort(nums.begin(), nums.end());
-
-        if (nums.back() < 0) {
-            return nums.back();
-        }
-
         unordered_set<int> st;
 
+        int maxi = -100;
         int ans = 0;
 
         for (int num : nums) {
@@ -17,6 +12,12 @@ public:
                 ans += num;
                 st.insert(num);
             }
+
+            maxi = max(maxi, num);
+        }
+
+        if (maxi < 0) {
+            return maxi;
         }
 
         return ans;
