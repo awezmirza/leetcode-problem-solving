@@ -1,25 +1,28 @@
 class Solution {
-public:
-    void findSubsets(int i, vector<int>& nums, int& cnt, int currOr, int& maxiOr) {
+    int countSubset(vector<int>& nums, int& maxiSubset, int i, int subset) {
         if (i >= nums.size()) {
-            if (currOr == maxiOr) {
-                cnt++;
+            if (subset == maxiSubset) {
+                return 1;
             }
-            return;
+
+            return 0;
         }
-        findSubsets(i + 1, nums, cnt, currOr, maxiOr);
-        findSubsets(i + 1, nums, cnt, currOr | nums[i], maxiOr);
+
+        int take = countSubset(nums, maxiSubset, i + 1, subset | nums[i]);
+        int notTake = countSubset(nums, maxiSubset, i + 1, subset);
+
+        return take + notTake;
     }
 
+public:
     int countMaxOrSubsets(vector<int>& nums) {
-        int n = nums.size();
-        int maxiOr = 0;
+        int maxiSubset = 0;
         for (int num : nums) {
-            maxiOr = maxiOr | num;
+            maxiSubset = maxiSubset | num;
         }
-        int cnt = 0;
-        findSubsets(0, nums, cnt, 0, maxiOr);
-        
-        return cnt;
+
+        int ans = countSubset(nums, maxiSubset, 0, 0);
+
+        return ans;
     }
 };
