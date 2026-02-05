@@ -1,11 +1,11 @@
 class Solution:
     def constructTransformedArray(self, nums: List[int]) -> List[int]:
         sze = len(nums)
-        result = []
+        result = [0] * sze
 
-        for i in range(0, sze):
+        for i in range(sze):
             if (nums[i] == 0):
-                result.append(nums[i])
+                result[i] = nums[i]
             else:
                 curr = i
                 steps = nums[i]
@@ -13,6 +13,6 @@ class Solution:
                     steps = abs(steps)
                 curr += steps
                 curr %= sze
-                result.append(nums[curr])
+                result[i] = nums[curr]
         return result
 
