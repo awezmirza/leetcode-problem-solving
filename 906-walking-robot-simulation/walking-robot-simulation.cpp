@@ -1,54 +1,94 @@
 class Solution {
 public:
-    int robotSim(vector<int>& commands, vector<vector<int>>& obstacles) {
 
-        // N => 0
-        // E => 1
-        // S => 2
-        // W => 3
+    pair<int, int> newDir(int movX, int movY, int command) {
+        if (command == -1) {
+            if (movX == 0 && movY == 1) {
+                movX = 1, movY = 0;
+            } else if (movX == 1 && movY == 0) {
+                movX = 0, movY = -1;
+            } else if (movX == 0 && movY == -1) {
+                movX = -1, movY = 0;
+            } else {
+                movX = 0, movY = 1;
+            }
+        } else {
+            if (movX == 0 && movY == 1) {
+                movX = -1, movY = 0;
+            } else if (movX == 1 && movY == 0) {
+                movX = 0, movY = 1;
+            } else if (movX == 0 && movY == -1) {
+                movX = 1, movY = 0;
+            } else {
+                movX = 0, movY = -1;
+            }
+        }
+
+        return {movX, movY};
+    }
+
+    int robotSim(vector<int>& commands, vector<vector<int>>& obstacles) {
+        unordered_map<int, unordered_set<int>> mpHor, mpVer;
+
+        for (auto obstacle : obstacles) {
+            mpHor[obstacle[0]].insert(obstacle[1]);
+            mpVer[obstacle[1]].insert(obstacle[0]);
+        }
+
+        int currX = 0, currY = 0;
+        int movX = 0;
+        int movY = 1;
 
         int ans = 0;
-        int currX = 0, currY = 0;
-        int dirn = 0;
-
-        unordered_set<string> st;
-        for (auto obstacle : obstacles) {
-            string key = to_string(obstacle[0]) + "_" + to_string(obstacle[1]);
-            st.insert(key);
-        }
 
         for (int command : commands) {
-            if (command == -1) {
-                dirn = (dirn + 1) % 4;
-            } else if (command == -2) {
-                dirn = dirn == 0 ? 3 : (dirn - 1);
+            if (command == -1 || command == -2) {
+                auto nDir = newDir(movX, movY, command);
+                movX = nDir.first;
+                movY = nDir.second; 
             } else {
-                for (int step = 0; step < command; step++) {
-                    
-                    int newY = currY;
-                    int newX = currX;
-
-                    if (dirn == 0) {
-                        newY += 1;
-                    } else if (dirn == 1) {
-                        newX += 1;
-                    } else if (dirn == 2) {
-                        newY -= 1;
+                if (movX == 0) {
+                    int st = currY;
+                    int end = currY + (movY) * command;
+                    if (movY == 1) {
+                        for (int i = 1; i <= command; i++) {
+                            if (mpVer[currY + 1].count(currX)) {
+                                break;
+                            }
+                            currY++;
+                        }
                     } else {
-                        newX -= 1;
+                        for (int i = 1; i <= command; i++) {
+                            if (mpVer[currY - 1].count(currX)) {
+                                break;
+                            }
+                            currY--;
+                        }
                     }
-
-                    string key = to_string(newX) + "_" + to_string(newY);
-                    if (st.find(key) != st.end()) {
-                        break;
+                } else {
+                    int st = currX;
+                    int end = currX + (movX) * command;
+                    if (movX == 1) {
+                        for (int i = 1; i <= command; i++) {
+                            if (mpHor[currX + 1].count(currY)) {
+                                break;
+                            }
+                            currX++;
+                        }
+                    } else {
+                        for (int i = 1; i <= command; i++) {
+                            if (mpHor[currX - 1].count(currY)) {
+                                break;
+                            }
+                            currX--;
+                        }
                     }
-
-                    currX = newX;
-                    currY = newY;
                 }
             }
-            ans = max(ans, (currX * currX + currY * currY));
+
+            ans = max(ans, abs(currX) * abs(currX) + abs(currY) * abs(currY));
         }
+
         return ans;
     }
 };
